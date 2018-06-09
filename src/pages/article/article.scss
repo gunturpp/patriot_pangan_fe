@@ -1,0 +1,43 @@
+page-article {
+  .container {
+    background-color: blueviolet;
+  }
+  div.card {
+    p.head {
+      font-size: 12px;
+    }
+    border-radius: 20px;
+    background-color: aquamarine;
+    padding: 10px;
+    .border {
+      border-bottom: solid 2px black;
+      width: 73%;
+      float: right;
+    }
+    span {
+      float: right;
+    }
+    .ava {
+      float: left;
+      margin: 10px;
+      height: 60px;
+      width: 60px;
+      border-radius: 100%;
+    }
+    h1 {
+      text-align: left;
+    }
+    .content {
+        text-align: justify;
+    }
+    .readmore {
+        text-align: right;
+      button {
+        background-color: transparent;
+        border: none;
+        right: 0px;
+        left: 100%;
+      }
+    }
+  }
+}

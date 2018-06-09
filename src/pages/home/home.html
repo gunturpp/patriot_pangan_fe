@@ -1,17 +1,32 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+  <div class="header">
+    <h3 class="tab-beranda">Beranda
+    </h3>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+    <img class="maps" src="../assets/imgs/peta.png">
+    <h1>Kecamatan Dramaga</h1>
+    <p>Desa Babakan</p>
+  </div>
+  <div>
+    <p>Statistik Kerawanan Pangan Kecamatan Dramaga</p>
+
+  </div>
+
+  <ion-card>
+      <ion-card-header>
+        Bulan Juli
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #pieCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  <h4>Hasil Kerawanan Pangan Desa Babakan</h4>
+  <ion-card>
+    <ion-card-header>
+      Tahun 2018
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

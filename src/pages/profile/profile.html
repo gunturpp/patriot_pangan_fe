@@ -1,0 +1,62 @@
+<ion-content>
+  <div class="header">
+    <h3 class="tab-profile">Profile
+      <button class="btn-header" (click)="settings()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+      <button class="btn-header" (click)="edit()">
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </h3>
+  </div>
+  <div class="center">
+    <img class="avatar" src="../assets/imgs/pangandaran.jpg">
+    <p class="name">Arga Putra Panatagama
+      <br>
+      <span class="address">Desa Babakan, Kec. Dramaga, Bogor, Jawa Barat</span>
+    </p>
+    <div class="border"></div>
+    <ion-row>
+      <ion-col>
+        <span class="report">15</span>
+        <div class="keterangan">Laporan terkirim</div>
+      </ion-col>
+      <ion-col>
+        <span class="report">1 Thn</span>
+        <div class="keterangan">Lama bergabung</div>
+      </ion-col>
+    </ion-row>
+    <div class="border"></div>
+    <h4>Keluarga yang Dipantau</h4>
+    <img class="avatar-family" src="../assets/imgs/pangandaran.jpg">
+    <p class="family">Keluarga Bapak Guntur Putra
+      <br> Desa Babakan RT 01/017
+      <br> Kondisi pangan saat ini: <span style="color:greenyellow">Rawan Pangan 1</span></p>
+
+    <div class="add-family">+ Keluarga yang ingin dipantau</div>
+    <h4>Penghargaan</h4>
+    <div class="achievements">
+      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
+      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
+      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
+    </div>
+    <ion-row>
+      <ion-col>
+        <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
+        <span class="report">3x</span>
+      </ion-col>
+      <ion-col>
+        <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
+        <span class="report">5x</span>
+      </ion-col>
+      <ion-col>
+        <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
+        <span class="report">10x</span>
+      </ion-col>
+    </ion-row>
+
+    <div class="logout">
+      <button ion-button>LOGOUT</button>
+    </div>
+  </div>
+</ion-content>

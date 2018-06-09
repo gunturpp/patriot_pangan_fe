@@ -1,0 +1,34 @@
+<ion-content>
+  <div class="header">
+    <h3 class="tab-profile">Laporan Baru
+    </h3>
+  </div>
+  <div class="progress-outer">
+    <div class="progress-inner" [style.width]="progress + '%'">
+      {{progress}}%
+    </div>
+  </div>
+
+  <ion-slides>
+    <!-- slide 1 -->
+    <ion-slide>
+      <img src="../assets/imgs/pangandaran.jpg">
+      <h1>Pernahkah khawatir kekurangan pangan?</h1>
+      <div class="btn">
+        <button class="btn-yes" (click)="tidak1()">Tidak</button>
+        <button class="btn-no" (click)="ya1()">Ya</button>
+      </div>
+    </ion-slide>
+
+    <!-- slide 2 -->
+    <ion-slide>
+        <img src="../assets/imgs/pangandaran.jpg">
+        <h1>Pernahkah tidak makan dalam sehari?</h1>
+        <div class="btn">
+          <button class="btn-yes" (click)="tidak2()">Tidak</button>
+          <button class="btn-no" (click)="ya2()">Ya</button>
+        </div>
+      </ion-slide>
+  
+  </ion-slides>
+</ion-content>

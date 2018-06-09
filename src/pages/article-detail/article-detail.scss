@@ -1,0 +1,20 @@
+page-article-detail {
+  .content {
+    text-align: justify;
+  }
+  .title {
+      text-align: center;
+  }
+  p.sub-head {
+      border-bottom: solid 2px black;
+      width: 100%;
+      font-size: 12px;
+      .date {
+          float: right;
+      }
+  }
+  img.picture {
+    height: 100%;
+    width: 100%;
+  }
+}

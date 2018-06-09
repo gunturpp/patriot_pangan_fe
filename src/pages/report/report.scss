@@ -1,0 +1,38 @@
+page-report {
+    .header {
+        text-align: center;
+        .tab-laporan {
+            color: #000000;
+            
+        }
+
+        .avatar-family {
+            border-radius: 100%;
+            height: 10vh;
+            width: 10vh;
+            float: left;
+            margin-top: 10px;
+            margin-left: 60px;
+            margin-right: 20px;
+            margin-bottom: 30px;
+        }
+        .family {
+            font-size: 10px;
+            text-align: left;
+            padding-top: 20px;
+        }
+        .report-ket1 {
+            font-size: 20px;
+            padding: 0px 30px;
+            display: block;
+        }
+        .report-ket2 {
+            display: block;
+            font-size: 12px;
+            padding: 0px 50px;
+            text-align: center;
+            
+        }
+    }
+
+}
