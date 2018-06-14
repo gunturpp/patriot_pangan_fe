@@ -21,6 +21,14 @@ export class ReportPage {
     console.log("ionViewDidLoad ReportPage");
   }
   createReport() {
-    this.navCtrl.push(FormulirPage);
+    this.navCtrl.setRoot(FormulirPage);
+    // hide tabs
+    let tabs = document.querySelectorAll('.tabbar');
+    if ( tabs !== null ) {
+      Object.keys(tabs).map((key) => {
+        tabs[ key ].style.transform = 'translateY(26px)';
+        tabs[ key ].style.display = 'none';
+      });
+    } // end if
   }
 }

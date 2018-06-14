@@ -41,6 +41,10 @@ $colors: (
   dark:       #222
 );
 
+$patriotBlue : #087e8b;
+$patriotPink : #ff5a5f;
+$patriotDongker : #07283b;
+
 
 // App iOS Variables
 // --------------------------------------------------
@@ -52,10 +56,11 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
-
-
+$tabs-md-tab-icon-color-active : $patriotPink;
+$tabs-md-tab-text-color-active : $patriotPink;
+$tabs-md-tab-icon-color : $patriotBlue;
+$tabs-md-tab-text-color : $patriotBlue;
+$tabs-md-tab-font-size-active: 1.6rem;
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here

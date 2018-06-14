@@ -1,18 +1,30 @@
 page-home {
-    .header {
-        text-align: center;
-        background-color: aquamarine;
-        height: 350px;
+  .header {
+    text-align: center;
+    background-color: $patriotBlue;
+    height: 350px;
+    .tab-beranda {
+        color: #fff;
+        padding-top:30px;
+        font-size: 14px;   
     }
-    .scroll-content {
-        background-color: map-get($colors, light);
-    }
+  }
+  .scroll-content {
+    background-color: map-get($colors, light);
+  }
 
-    ion-card-header {
-        font-weight: bold;
-    }
-    .maps {
-        height: 200px;
-        width: 200px;
-    }
+  ion-card-header {
+    font-weight: bold;
+  }
+  .maps {
+    height: 200px;
+    width: 200px;
+  }
+  p.title {
+    text-align: center;
+    font-weight: bold;
+  }
+  .chart-content {
+    background-color: #fff;
+  }
 }

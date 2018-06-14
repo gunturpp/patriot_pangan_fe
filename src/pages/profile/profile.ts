@@ -21,5 +21,8 @@ export class ProfilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
   }
+  edit() {
+    console.log('ionViewDidLoad ProfilePage');    
+  }
 
 }

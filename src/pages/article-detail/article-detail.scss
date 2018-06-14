@@ -1,20 +1,28 @@
 page-article-detail {
+  .btn-back {
+    padding: 10px;
+  }
   .content {
     text-align: justify;
+    padding: 20px;
   }
   .title {
-      text-align: center;
+    text-align: center;
   }
   p.sub-head {
-      border-bottom: solid 2px black;
-      width: 100%;
-      font-size: 12px;
-      .date {
-          float: right;
-      }
+    border-bottom: 2px rgba(100, 100, 100, 0.1) solid;
+    width: 80vw;
+    padding: 0px 20px;
+    font-size: 8px;
+    margin: auto;
+    .date {
+      float: right;
+    }
   }
   img.picture {
-    height: 100%;
+    margin-top: 30px;
+    padding: 0px !important;
+    height: 300%px;
     width: 100%;
   }
 }

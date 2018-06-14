@@ -1,31 +1,39 @@
 page-article {
+  .tab-profile {
+    // padding-top: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: $patriotBlue;
+    margin-bottom: 30px;
+  }
   .container {
-    background-color: blueviolet;
+    background-color: $patriotBlue;
   }
   div.card {
-    p.head {
-      font-size: 12px;
+
+    span.head {
+      font-size: 8px;
     }
     border-radius: 20px;
-    background-color: aquamarine;
+    background-color: #fff;
     padding: 10px;
     .border {
       border-bottom: solid 2px black;
       width: 73%;
       float: right;
     }
-    span {
+    span.right {
       float: right;
     }
     .ava {
       float: left;
       margin: 10px;
-      height: 60px;
-      width: 60px;
+      height: 50px;
+      width: 50px;
       border-radius: 100%;
     }
-    h1 {
-      text-align: left;
+    h1.title {
+      text-align: left !important;
     }
     .content {
         text-align: justify;

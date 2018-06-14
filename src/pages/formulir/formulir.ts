@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, Slides } from "ionic-angular";
+import { HomePage } from "../home/home";
 
 /**
  * Generated class for the FormulirPage page.
@@ -50,17 +51,21 @@ export class FormulirPage {
   }
   ya1() {
     this.nextSlide();
-    this.progress = 40;
-
+    this.progress = Math.round(1/4*100);
   }
   ya2() {
     this.nextSlide();
+    this.progress = Math.round(2/4*100);
   }
   ya3() {
     this.nextSlide();
+    this.progress = Math.round(3/4*100);
   }
-  ya4() {
+
+  submit() {
     this.nextSlide();
+    this.progress = Math.round(4/4*100);
+    
   }
   ya5() {
     this.nextSlide();
@@ -70,5 +75,19 @@ export class FormulirPage {
   }
   ya7() {
     this.nextSlide();
+  }
+  done() {
+    // unhide tabs
+    this.navCtrl.setRoot(HomePage);
+    let tabs = document.querySelectorAll('.tabbar');
+    if ( tabs !== null ) {
+      Object.keys(tabs).map((key) => {
+        tabs[ key ].style.transform = 'translateY(0)';
+        tabs[ key ].style.display = 'inline';
+      });
+    } // end if
+  }
+  uploadFoto() {
+    console.log("upload foto");
   }
 }

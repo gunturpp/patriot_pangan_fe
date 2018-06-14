@@ -1,86 +1,97 @@
 page-profile {
-    .tab-profile {
-        padding-top: 30px;
-        text-align: center;
-        color: #fff;
-        background-color: brown;
-        border-bottom-left-radius: 50px;
-        border-bottom-right-radius: 50px;
-        height: 200px;
-        .btn-header {
-            background-color: transparent;
-            border: none;
-            right: 0;
-            float: right;
-            font-size: 16px;
-        }
+  .tab-profile {
+    padding-top: 30px;
+    text-align: center;
+    color: #fff;
+    background-color: $patriotBlue;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    height: 200px;
+  }
+  .btn-edit {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    right: 25%;
+    margin-top:-80px;    
+    color:#fff;
+    font-size: 16px;
+  }
+  div.center {
+    text-align: center;
+    .avatar {
+      border-radius: 100%;
+      height: 140px;
+      width: 140px;
+      top: -80px;
+      position: relative;
+    //   border: solid;
     }
-    div.center {
-        text-align: center;
-        .avatar {
-            border-radius: 100%;
-            height: 140px;
-            width: 140px;
-            top:-80px;
-            position: relative;
-            border: solid;
-        }
-        .name {
-            font-size: 30px;
-            margin-top:-85px;
-            padding: 0 30px;
-            span.address {
-                padding: 0px 0px !important;
-                font-size: 12px;
-                position: relative;
-                width: 80%;
-            }
-        }
-        .border {
-            border-top: 1px black solid;
-        }
-        .report {
-            margin-top: 20px;
-            font-size: 40px;
-            font-weight: bold;
-            .keterangan {
-                font-size: 16px;
-                font-weight: none !important;
-                margin-top: -80px;
-                float: left;
-            }
-        }
-    }
-    .family {
-        text-align: left;
-        font-size: 13px;
-        padding-top: 20px;
-    }
-    .avatar-family {
-        border-radius: 100%;
-        float: left;
-        margin-left: 20px;
-        margin-right: 10px;
-        height: 13vh;
-        width: 13vh;
-    }
-    .add-family {
-        border: 3px dotted brown;
-        margin: 30px;
-        text-align: center;
-        height: 80px;
-        border-radius: 20px;
-    }
-    .achievements {
+    .name {
+      font-size: 30px;
+      margin-top: -85px;
+      padding: 0 30px;
+      span.address {
+        padding: 0px 0px !important;
+        font-size: 12px;
         position: relative;
-        text-align: center;
-        img.achievements-img {
-            border-radius: 100%;
-            margin: 10px;
-            height: 15vh;
-            width: 15vh;
-        }
+        width: 80%;
+      }
     }
-    .logout {
+    .border {
+      border-top: 2px rgba(100,100,100,0.1) solid;
+      width: 80%;
+      text-align: center;
+      margin: auto;
     }
+    ion-col {
+      margin-bottom: 40px;
+    }
+    .report {
+      margin-top: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      .keterangan {
+        font-size: 16px;
+        font-weight: none !important;
+        margin-top: -80px;
+        float: left;
+      }
+    }
+  }
+  .family {
+    text-align: left;
+    font-size: 13px;
+    padding-top: 20px;
+  }
+  .avatar-family {
+    border-radius: 100%;
+    float: left;
+    margin-left: 20px;
+    margin-right: 10px;
+    height: 13vh;
+    width: 13vh;
+  }
+  .add-family {
+    border: 3px dotted brown;
+    margin: 30px;
+    text-align: center;
+    height: 80px;
+    border-radius: 20px;
+  }
+  .achievements {
+    position: relative;
+    text-align: center;
+    img.achievements-img {
+      border-radius: 100%;
+      height: 16vh;
+      width: 16vh;
+    }
+  }
+  button.logout {
+    background-color: $patriotPink;
+    width: 200px;
+    font-size: 24px;
+    margin: 20px;
+  }
 }

@@ -1,15 +1,14 @@
 <ion-content>
   <div class="header">
-    <h3 class="tab-profile">Profile
-      <button class="btn-header" (click)="settings()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-      <button class="btn-header" (click)="edit()">
-        <ion-icon name="md-create"></ion-icon>
-      </button>
-    </h3>
+    <h3 class="tab-profile">Profile</h3>
   </div>
   <div class="center">
+    <!-- <button class="btn-header" (click)="settings()">
+      <ion-icon name="settings"></ion-icon>
+    </button> -->
+    <button class="btn-edit" (click)="edit()">
+      <ion-icon name="md-create"></ion-icon>
+    </button>
     <img class="avatar" src="../assets/imgs/pangandaran.jpg">
     <p class="name">Arga Putra Panatagama
       <br>
@@ -20,25 +19,28 @@
       <ion-col>
         <span class="report">15</span>
         <div class="keterangan">Laporan terkirim</div>
+        <div class="border"></div>        
       </ion-col>
       <ion-col>
         <span class="report">1 Thn</span>
         <div class="keterangan">Lama bergabung</div>
+        <div class="border"></div>
       </ion-col>
     </ion-row>
-    <div class="border"></div>
-    <h4>Keluarga yang Dipantau</h4>
+    <h6>Keluarga yang Dipantau</h6>
     <img class="avatar-family" src="../assets/imgs/pangandaran.jpg">
     <p class="family">Keluarga Bapak Guntur Putra
       <br> Desa Babakan RT 01/017
-      <br> Kondisi pangan saat ini: <span style="color:greenyellow">Rawan Pangan 1</span></p>
+      <br> Kondisi pangan saat ini:
+      <span style="color:greenyellow">Rawan Pangan 1</span>
+    </p>
 
     <div class="add-family">+ Keluarga yang ingin dipantau</div>
     <h4>Penghargaan</h4>
     <div class="achievements">
-      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
-      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
-      <img class="achievements-img" src="../assets/imgs/pangandaran.jpg">
+      <img class="achievements-img" src="../assets/imgs/profile/achievement1.png">
+      <img class="achievements-img" src="../assets/imgs/profile/achievement2.png">
+      <img class="achievements-img" src="../assets/imgs/profile/achievement3.png">
     </div>
     <ion-row>
       <ion-col>
@@ -55,8 +57,8 @@
       </ion-col>
     </ion-row>
 
-    <div class="logout">
-      <button ion-button>LOGOUT</button>
+    <div>
+      <button class="logout" ion-button>LOGOUT</button>
     </div>
   </div>
 </ion-content>
