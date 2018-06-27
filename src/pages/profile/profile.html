@@ -23,7 +23,7 @@
     <button class="btn-edit" (click)="edit()">
       <ion-icon name="md-create"></ion-icon>
     </button>
-    <img class="avatar" src="http://patriotpangan.com/nodejs/express/public/images/{{user.pathfoto}}">
+    <img class="avatar" src="https://patriotpangan.com/nodejs/express/{{user.pathfoto}}">
     <p class="name">{{user.nama}}
       <br>
       <span class="address">{{user.alamat}}, Bogor</span>
@@ -47,7 +47,7 @@
     </div>
     <div  *ngIf="family != null">
       <div class="allFamily" *ngFor="let fam of family; let iter = index">
-        <img class="avatar-family" src="patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
+        <img class="avatar-family" src="https://patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
         <p class="family">Keluarga {{fam.namakeluarga}}
           <br><span *ngIf="rgn_subdistrict">{{rgn_subdistrict[iter].name}}</span>
           <br> Kondisi pangan saat ini:

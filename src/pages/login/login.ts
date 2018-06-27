@@ -9,14 +9,14 @@ import { TabsPage } from "../tabs/tabs";
   templateUrl: "login.html"
 })
 export class LoginPage {
-  email = "patriot@gmail.com";
-  password = "11111111";
-  nama = "test1";
-  gender = 1;
-  fk_desaid = 1;
-  alamat = "jl.s.kampar";
-  foto = "wkwk";
-  constructor(
+  email:any;
+  password:any;
+  nama:any;
+  gender:any;
+  fk_desaid:any;
+  alamat:any;
+  foto:any;
+  constructor(  
     public data: DataProvider,
     public navCtrl: NavController,
     public navParams: NavParams
