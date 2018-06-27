@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { HttpModule } from "@angular/http";
 
 import { ReportPage } from '../pages/report/report';
 import { ProfilePage } from '../pages/profile/profile';
@@ -13,6 +14,11 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FormulirPage } from '../pages/formulir/formulir';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { ConnectivityProvider } from '../providers/connectivity/connectivity';
+import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
+// import { DatProvider } from '../providers/dat/dat';
+import { DataProvider } from '../providers/data/data';
 
 
 @NgModule({
@@ -29,7 +35,8 @@ import { FormulirPage } from '../pages/formulir/formulir';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -46,7 +53,11 @@ import { FormulirPage } from '../pages/formulir/formulir';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    GoogleMapsProvider,
+    ConnectivityProvider,
+    GoogleMapsClusterProvider,
+    DataProvider
   ]
 })
 export class AppModule {}

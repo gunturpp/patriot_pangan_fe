@@ -1,5 +1,5 @@
-<ion-content style="background-color: #fff">
-  <div class="header">
+<ion-content class="container">
+  <!-- <div class="header">
     <h3 class="tab-beranda">Beranda
     </h3>
 
@@ -8,34 +8,23 @@
     <p style="color:#fff">Desa Babakan</p>
   </div>
   <div>
-  </div>
-  
-  <p class="title">Statistik Kerawanan Pangan Kecamatan Dramaga</p>
+  </div> -->
+  <div #mapContainer id="map"></div>
   <div class="chart-content">
-    <ion-card-header>
-      Bulan Juli
-    </ion-card-header>
-    <ion-card-content>
+    <p>Statistik Kerawanan Pangan Kecamatan Dramaga</p>
+    <p class="title">Bulan Juli</p>
+    <div>
       <canvas #pieCanvas></canvas>
-    </ion-card-content>
-  </div>
-  <p class="title">Statistik Kerawanan Pangan Kecamatan Dramaga</p>
-  <div class="chart-content">
-    <ion-card-header>
-      Bulan Juli
-    </ion-card-header>
-    <ion-card-content>
+    </div>
+    <p>Statistik Kerawanan Pangan Kecamatan Dramaga</p>
+    <p class="title">Bulan Juli</p>
+    <div>
       <canvas #barCanvas></canvas>
-    </ion-card-content>
-  </div>
-
-  <p class="title">Hasil Kerawanan Pangan Desa Babakan</p>
-  <div class="chart-content">
-    <ion-card-header>
-      Tahun 2018
-    </ion-card-header>
-    <ion-card-content>
+    </div>
+    <p>Hasil Kerawanan Pangan Desa Babakan</p>
+    <p class="title">Tahun 2018</p>
+    <div>
       <canvas #lineCanvas></canvas>
-    </ion-card-content>
+    </div>
   </div>
 </ion-content>
