@@ -1,17 +1,37 @@
-<ion-content *ngIf="user">
+<ion-content  *ngIf="user" >
   <!-- family add -->
   <div *ngIf="statusAdd" class="familyContainer">
+    <ion-icon name="close" class="close" (click)="close()"></ion-icon>
     <h2>Masukkan identitas keluarga baru</h2>
-    <ion-input type="text" [(ngModel)]="kepalaKeluarga" placeholder="Nama Kepala Keluarga"></ion-input>
-    <ion-input type="text" [(ngModel)]="desa" placeholder="Nama Desa"></ion-input>
-    <ion-textarea type="text" rows="4" [(ngModel)]="alamat" placeholder="Alamat"></ion-textarea>
+    <ion-list line inset>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="people"></ion-icon>
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="kepalaKeluarga" placeholder="Nama Kepala Keluarga"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="key"></ion-icon>
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="desa" placeholder="Nama Desa"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="key"></ion-icon>
+        </ion-label>
+        <ion-textarea type="text" rows="4" [(ngModel)]="alamat" placeholder="Alamat"></ion-textarea>
+      </ion-item>
+    </ion-list>
     <div class="addPicFamily">
       <!-- <img tappable (click)="uploadPicture()" src="patriotpangan.com/nodejs/public/images/{{pathfoto}}"/> -->
       <img tappable (click)="uploadPicture()" src="assets/imgs/default.png" />
     </div>
     <button ion-button medium full (click)="addNewFamily()">Tambah Keluarga</button>
     <br>
-    <ion-icon name="close" (click)="close()"></ion-icon>
   </div>
   <div class="header">
     <h3 class="tab-profile">Profile</h3>
@@ -45,11 +65,12 @@
     <div *ngIf="family == null">
       <h3>Tidak ada keluarga yang dipantau</h3>
     </div>
-    <div  *ngIf="family != null">
+    <div *ngIf="family != null">
       <div class="allFamily" *ngFor="let fam of family; let iter = index">
         <img class="avatar-family" src="https://patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
         <p class="family">Keluarga {{fam.namakeluarga}}
-          <br><span *ngIf="rgn_subdistrict">{{rgn_subdistrict[iter].name}}</span>
+          <br>
+          <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[iter].name}}</span>
           <br> Kondisi pangan saat ini:
           <span style="color:greenyellow">Rawan Pangan 1</span>
         </p>
@@ -78,7 +99,7 @@
     </ion-row>
 
     <div>
-      <button class="logout" ion-button>LOGOUT</button>
+      <button (click)="logout()" class="logout" ion-button>LOGOUT</button>
     </div>
   </div>
 </ion-content>

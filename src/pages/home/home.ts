@@ -2,9 +2,12 @@ import { Component, ViewChild, ElementRef } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { Chart } from "chart.js";
 import { Http } from "@angular/http";
+import pattern from "patternomaly";
 import { DataProvider } from "../../providers/data/data";
+import { LoadingProvider } from "../../providers/loading";
 
 import "rxjs/add/operator/map";
+import { LoginPage } from "../login/login";
 declare var google: any;
 
 @Component({
@@ -21,20 +24,46 @@ export class HomePage {
   pieChart: any;
   lineChart: any;
   barChart: any;
-
+  token: any;
+  dataUser: any;
+  user: any;
   constructor(
+    public loadingProvider: LoadingProvider,
     public data: DataProvider,
-    public http: Http, 
-    public navCtrl: NavController) {}
+    public http: Http,
+    public navCtrl: NavController,
+  ) {}
   ionViewDidLoad() {
+    this.token = localStorage.getItem("tokenPatriot");
+    this.getCurrentUser();
     this.pieChart = this.getPieChart();
     this.barChart = this.getBarChart();
     this.lineChart = this.getLineChart();
     setTimeout(() => {
       this.displayGoogleMap();
       this.getMarkers();
-    }, 200);  
-  }  
+    }, 200);
+  }
+  getCurrentUser() {
+    this.loadingProvider.show();
+    this.data
+      .currentUser(this.token)
+      .then(user => {
+        this.loadingProvider.hide();
+        this.dataUser = user;
+        this.user = this.dataUser.data;
+        console.log("user profile", this.user);
+        if (this.user == "undefined") {
+          localStorage.removeItem("tokenPatriot");
+          this.navCtrl.setRoot(LoginPage);
+        }
+        localStorage.setItem("currentUserPatriot", JSON.stringify(this.user));
+      })
+      .catch(err => {
+        console.log("terjadi error", err);
+        this.loadingProvider.hide();
+      });
+  }
 
   getChart(context, chartType, data, options?) {
     return new Chart(context, {
@@ -60,8 +89,21 @@ export class HomePage {
       datasets: [
         {
           data: [a, b, c, d, e],
-          backgroundColor: ["green", "yellow", "pink", "red", "brown"],
-          hoverBackgroundColor: ["green", "yellow", "pink", "red", "brown"]
+          backgroundColor: [ "green","greenyellow","yellow","red","maroon"
+            // pattern.draw('hijautua', '#00aa00'),
+            // pattern.draw('hijau', '#00ff00'),
+            // pattern.draw('kuning', '#ffff00'),
+            // pattern.draw('merah', '#ff0000'),
+            // pattern.draw('merahtua', '#aa0000'),
+          ],
+          hoverBackgroundColor: [
+            "green","greenyellow","yellow","red","maroon"
+            // pattern.draw('hijautua', '#00aa00'),
+            // pattern.draw('hijau', '#00ff00'),
+            // pattern.draw('kuning', '#ffff00'),
+            // pattern.draw('merah', '#ff0000'),
+            // pattern.draw('merahtua', '#aa0000'),
+          ],
         }
       ]
     };
@@ -197,41 +239,52 @@ export class HomePage {
         this.addMarkersToMap(data);
       });
   }
+
   addMarkersToMap(markers) {
     for (let marker of markers) {
       // console.log("marks", marker);
-      var iconTrump = {
-        url: "https://www.freeiconspng.com/uploads/trump-face-png-9.png", // url
-        scaledSize: new google.maps.Size(40, 40), // scaled size
-        origin: new google.maps.Point(0, 0), // origin
-        anchor: new google.maps.Point(0, 0) // anchor
+      var iconNew = {
+        url:
+          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" +
+          marker.color // url
+        // scaledSize: new google.maps.Size(20, 20), // scaled size
+        // origin: new google.maps.Point(0, 0), // origin
+        // anchor: new google.maps.Point(0, 10) // anchor
       };
       var position = new google.maps.LatLng(marker.latitude, marker.longitude);
       var dogwalkMarker = new google.maps.Marker({
         position: position,
         label: marker.name,
-        icon: iconTrump
+        icon: iconNew,
+        animation: google.maps.Animation.DROP,
       });
+      // hijauTua hijau kuning merah merahTua
+      // 00aa00 adff2f ffff00 ff0000 b03060
+      if(marker.color == "b03060" || marker.color == "ff0000" ) {
+        dogwalkMarker.addListener('click',  dogwalkMarker.setAnimation(google.maps.Animation.BOUNCE));
+      }
+     
+      // infowindows
       // console.log("detail", marker.details);
       dogwalkMarker.setMap(this.map);
       var infowindow = new google.maps.InfoWindow({
-        content: marker.details
+        content: "wow"
+        // content: marker.details
       });
       dogwalkMarker.addListener("click", function() {
         infowindow.open(this.map, dogwalkMarker);
       });
       // polygone
-      var flightPath = new google.maps.Polygon({
-        path: marker.polygone,
-        geodesic: true,
-        strokeColor: "#000000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        fillColor: marker.color,
-        fillOpacity: 0.4
-      });
-
-      flightPath.setMap(this.map);
+      // var flightPath = new google.maps.Polygon({
+      //   path: marker.polygone,
+      //   geodesic: true,
+      //   strokeColor: "#000000",
+      //   strokeOpacity: 1.0,
+      //   strokeWeight: 2,
+      //   fillColor: marker.color,
+      //   fillOpacity: 0.4
+      // });
+      // flightPath.setMap(this.map);
     }
   }
 }

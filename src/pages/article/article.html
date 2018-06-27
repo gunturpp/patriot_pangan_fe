@@ -2,24 +2,30 @@
   <div class="header">
     <h3 class="tab-profile">Artikel</h3>
   </div>
-  <div class="card" *ngFor="let article of articles;let i = index">
-    <img class="ava" src="https://patriotpangan.com/nodejs/public/images/artikels/{{article.pathfoto}}">
-    <span *ngIf="penulis" class="head">oleh
-      <b >{{penulis[i]}}</b>
-    </span>
-    <br>
-    <span class="head">untuk {{article.sumberarktikel}}
-      <span class="right">{{article.createdAt | date: 'dd MMMM yyyy'}}</span>
-    </span>
-    <div class="border"></div>
-    <br>
-    <br>
-    <h1 class="title">{{article.judul}}</h1>
-    <p class="content">{{article.isi}}</p>
-    <div class="readmore">
-      <button (click)="readmore(article)">Baca Selengkapnya
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
+  <div *ngIf="articles == null">
+    <h3>Tidak ada artikel</h3>
+  </div>
+  <div *ngIf="articles != null">
+
+    <div class="card" *ngFor="let article of articles;let i = index">
+      <img class="ava" src="https://patriotpangan.com/nodejs/public/images/artikels/{{article.pathfoto}}">
+      <span *ngIf="penulis" class="head">oleh
+        <b>{{penulis[i]}}</b>
+      </span>
+      <br>
+      <span class="head">untuk {{article.sumberarktikel}}
+        <span class="right">{{article.createdAt | date: 'dd MMMM yyyy'}}</span>
+      </span>
+      <div class="border"></div>
+      <br>
+      <br>
+      <h1 class="title">{{article.judul}}</h1>
+      <p class="content">{{article.isi}}</p>
+      <div class="readmore">
+        <button (click)="readmore(article)">Baca Selengkapnya
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </div>
     </div>
   </div>
 

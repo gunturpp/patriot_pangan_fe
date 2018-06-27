@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ArticleDetailPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { LoadingProvider } from "../../providers/loading";
 
 @IonicPage()
 @Component({
@@ -16,7 +10,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ArticleDetailPage {
   detailArtikel:any;
   penulis:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public loadingProvider: LoadingProvider,public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

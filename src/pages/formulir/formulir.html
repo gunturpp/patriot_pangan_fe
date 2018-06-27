@@ -23,7 +23,8 @@
     <!-- slide 2 -->
     <ion-slide>
       <img class="img-form" src="assets/imgs/report/slide2.png">
-      <p class="question">Pernahkah tidak makan dalam sehari?</p>
+      <p class="question">Adakah perubahan jenis pangan?</p>
+      <span style="font-size: 10px">(Semisal, dari nasi menjadi singkong)</span>
       <div class="footer">
         <button class="btn-yes" (click)="tidak2()">Tidak</button>
         <button class="btn-no" (click)="ya2()">Ya</button>
@@ -32,7 +33,7 @@
     <!-- slide 3 -->
     <ion-slide>
       <img class="img-form" src="assets/imgs/report/slide3.png">
-      <p class="question">Adakah penurunan berat badan balita dalam dua bulan terakhir karena kurang makan?</p>
+      <p class="question">Adakah penurunan frekuensi dan/atau jumlah konsumsi pangan orang dewasa?</p>
       <div class="footer">
         <button class="btn-yes" (click)="tidak3()">Tidak</button>
         <button class="btn-no" (click)="ya3()">Ya</button>
@@ -44,13 +45,13 @@
         <button class="btn-yes" (click)="tidak4()">Tidak</button>
         <button class="btn-no" (click)="ya4()">Ya</button>
       </div>
-      <img class="img-form" src="assets/imgs/report/slide1.png">
-      <p class="question">Pernahkah khawatir kekurangan pangan?</p>
+      <img class="img-form" src="assets/imgs/report/slide4.png">
+      <p class="question">Adakah penurunan frekuensi dan/atau jumlah konsumsi pangan balita</p>
     </ion-slide>
 
     <!-- slide 5 -->
     <ion-slide>
-      <img class="img-form" src="assets/imgs/report/slide2.png">
+      <img class="img-form" src="assets/imgs/report/slide5.png">
       <p class="question">Pernahkah tidak makan dalam sehari?</p>
       <div class="footer">
         <button class="btn-yes" (click)="tidak5()">Tidak</button>
@@ -59,7 +60,7 @@
     </ion-slide>
     <!-- slide 6 -->
     <ion-slide>
-      <img class="img-form" src="assets/imgs/report/slide3.png">
+      <img class="img-form" src="assets/imgs/report/slide6.png">
       <p class="question">Adakah penurunan berat badan balita dalam dua bulan terakhir karena kurang makan?</p>
       <div class="footer">
         <button class="btn-yes" (click)="tidak6()">Tidak</button>
@@ -68,8 +69,8 @@
     </ion-slide>
     <!-- slide 7 -->
     <ion-slide>
-      <img class="img-form" src="assets/imgs/report/slide3.png">
-      <p class="question">Adakah penurunan berat badan balita dalam dua bulan terakhir karena kurang makan?</p>
+      <img class="img-form" src="assets/imgs/report/slide7.png">
+      <p class="question">Adakah penurunan berat badan orang dewasa karena kurang makan?</p>
       <div class="footer">
         <button class="btn-yes" (click)="tidak7()">Tidak</button>
         <button class="btn-no" (click)="ya7()">Ya</button>
@@ -82,13 +83,13 @@
         <button class="btn-submit" ion-button (click)="submit()">OK</button>
       </div>
       <!-- soal 1 -->
-      <p>Terakhir, yuk laporkan kondisi lingkunganmu!</p>
+      <p style="padding: 10px;">Terakhir, yuk laporkan kondisi lingkunganmu!</p>
       <div class="content-3soal">
         <div class="soal">
           <img class="img-quest" src="assets/imgs/report/cloud.png">
           <p class="quest">Bagaimana kondisi cuaca di daerahmu?</p>
         </div>
-        <ion-list radio-group>
+        <ion-list [(ngModel)]="soal1" radio-group>
           <ion-item>
             <ion-label>Kemarau</ion-label>
             <ion-radio item-left value="kemarau" checked></ion-radio>
@@ -107,7 +108,7 @@
           <img class="img-quest" src="assets/imgs/report/cloud.png">
           <p class="quest">Bagaimana kondisi harga pangan di daerahmu?</p>
         </div>
-        <ion-list radio-group>
+        <ion-list [(ngModel)]="soal2" radio-group>
           <ion-item>
             <ion-label>Melonjak</ion-label>
             <ion-radio item-left value="melonjak" checked></ion-radio>
@@ -122,7 +123,7 @@
           <img class="img-quest" src="assets/imgs/report/cloud.png">
           <p class="quest">Adakah kelangkaan pangan di daerahmu?</p>
         </div>
-        <ion-list radio-group>
+        <ion-list [(ngModel)]="soal3" radio-group>
           <ion-item>
             <ion-label>Ada</ion-label>
             <ion-radio item-left value="ada" checked></ion-radio>
@@ -141,7 +142,9 @@
         <button class="btn-submit" ion-button (click)="done()">Selesai</button>
       </div>
 
-      <img class="upload-foto" (click)="uploadFoto()" src="assets/imgs/pangandaran.jpg">
+      <div class="upload-foto" (click)="uploadPicture()" src="assets/imgs/pangandaran.jpg">
+        <ion-icon class="camCss" name="camera"></ion-icon>
+      </div>
       <p class="question">Kerja bagus! Tambahkan deskripsi dan foto untuk memperkuat laporan kamu.</p>
       <ion-textarea class="input-comment" autocorrect="on" max="1000" type="text" autocomplete="on" rows="5" placeholder="Tulis deskripsi kerawanan pangan di daerahmu..."></ion-textarea>
 

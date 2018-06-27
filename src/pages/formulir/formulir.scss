@@ -28,7 +28,7 @@ page-formulir {
     top: 0;  
   }
   .question {
-    font-size: 16px;
+    font-size: 1.6em;
     padding: 0px 20px;
     color: $patriotBlue;
   }
@@ -71,7 +71,7 @@ page-formulir {
   }
 
   .img-form {
-    width: 35%;
+    width: 80%;
     height: 250px;
   }
   p.quest {
@@ -92,6 +92,8 @@ page-formulir {
     }
   }
   .upload-foto {
+    border:dotted;
+    border-radius: 30px;
     width: 70%;
     margin: auto;
     height: 150px;
@@ -108,5 +110,9 @@ page-formulir {
     width: 80%;
     height: 130px;
     margin: auto;
+  }
+  .camCss {
+    margin-top: 30px; 
+    font-size: 80px;
   }
 }

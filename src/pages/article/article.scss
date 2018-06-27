@@ -34,12 +34,14 @@ page-article {
     }
     h1.title {
       text-align: left !important;
+      padding: 10px;
     }
     .content {
-        text-align: justify;
+      text-align: justify;
+      padding: 10px;
     }
     .readmore {
-        text-align: right;
+      text-align: right;
       button {
         background-color: transparent;
         border: none;

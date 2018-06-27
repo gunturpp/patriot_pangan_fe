@@ -5,16 +5,24 @@
     <p class="report-ket1">Hari yang baik untuk melapor, Arga Putra Panatama</p>
     <span class="report-ket2">Batas waktu melapormu untuk minggu ini adalah
       <span style="font-weight: bold">2 hari lagi</span>. Lebih cepat lebih baik, ayo lapor sekarang!</span>
-    <div>
-      <h6>Keluarga yang Dipantau</h6>
-      <img class="avatar-family" src="assets/imgs/pangandaran.jpg">
-      <p class="family">Keluarga Bapak Guntur Putra
-        <br> Desa Babakan RT 01/017
-        <br> Kondisi pangan saat ini: <span style="color:greenyellow">Rawan Pangan 1</span></p>
+    <h6>Keluarga yang Dipantau</h6>
+    <div *ngIf="family == null">
+      <h3>Tidak ada keluarga yang dipantau</h3>
     </div>
-  </div>
+      <div (click)="returnId(fam.id)" class="card" *ngFor="let fam of family;let i = index">
+        <img class="avatar-family" src="https://patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
+        <p class="family">Keluarga {{fam.namakeluarga}}
+          <br>
+          <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[i].name}}</span>
+          <br> Kondisi pangan saat ini:
+          <span style="color:greenyellow">Rawan Pangan 1</span>
+        </p>
+      </div>
+    </div>
   <div style="text-align: center">
-    <br><br>
-    <button class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
+    <br>
+    <br>
+    <button *ngIf="!idFamily" disabled class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
+    <button *ngIf="idFamily" class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
   </div>
 </ion-content>

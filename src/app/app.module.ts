@@ -21,6 +21,7 @@ import { ConnectivityProvider } from '../providers/connectivity/connectivity';
 import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
 // import { DatProvider } from '../providers/dat/dat';
 import { DataProvider } from '../providers/data/data';
+import { LoadingProvider } from '../providers/loading';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { DataProvider } from '../providers/data/data';
     GoogleMapsProvider,
     ConnectivityProvider,
     GoogleMapsClusterProvider,
-    DataProvider
+    DataProvider,
+    LoadingProvider
   ]
 })
 export class AppModule {}

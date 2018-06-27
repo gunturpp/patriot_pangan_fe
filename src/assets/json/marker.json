@@ -1,10 +1,11 @@
 [
   {
+    "id":1,
     "latitude": -6.578127,
     "longitude": 106.731268,
     "name": "Desa Dramaga",
     "details": "apanih isi kontennya?",
-    "color": "red",
+    "color": "b03060",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -14,11 +15,12 @@
     ]
   },
   {
+    "id":2,
     "latitude": -6.586378,
     "longitude": 106.744071,
     "name": "Desa Ciherang",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "00ff00",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -28,11 +30,12 @@
     ]
   },
   {
+    "id":3,
     "latitude": -6.545714,
     "longitude": 106.732162,
     "name": "Desa Cikarawang",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "b03060",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -42,11 +45,12 @@
     ]
   },
   {
+    "id":4,
     "latitude": -6.556238,
     "longitude": 106.726264,
     "name": "Desa Babakan",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "ffff00",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -56,11 +60,12 @@
     ]
   },
   {
+    "id":5,
     "latitude": -6.585968,
     "longitude": 106.725142,
     "name": "Desa Neglasari",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "00aa00",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -70,11 +75,12 @@
     ]
   },
   {
+    "id":6,
     "latitude": -6.607898,
     "longitude": 106.720225,
     "name": "Desa Petir",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "ff0000",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -84,11 +90,12 @@
     ]
   },
   {
+    "id":7,
     "latitude": -6.62213,
     "longitude": 106.716076,
     "name": "Desa Purwasari",
     "details": "apanih isi kontennya?",
-    "color": "green",
+    "color": " b03060",
     "polygone": [
       { "lat": -6.633845, "lng": 106.712537 },
       { "lat": -6.633973, "lng": 106.715088 },
@@ -104,11 +111,13 @@
     ]
   },
   {
+    
+    "id":8,
     "latitude": -6.583138,
     "longitude": 106.733758,
     "name": "Desa Sinar Sari",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "adff2f",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -118,11 +127,12 @@
     ]
   },
   {
+    "id":9,
     "latitude": -6.555214,
     "longitude": 107.061966,
     "name": "Desa Sukadamai",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "00ff00",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },
@@ -132,11 +142,12 @@
     ]
   },
   {
+    "id":10,
     "latitude": -6.602183,
     "longitude": 106.738123,
     "name": "Desa Sukawening",
     "details": "apanih isi kontennya?",
-     "color": "red",
+    "color": "ffff00",
     "polygone": [
       { "lat": -6.603365, "lng": 106.721311 },
       { "lat": -6.608139, "lng": 106.71599 },

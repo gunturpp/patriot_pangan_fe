@@ -1,97 +1,126 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ActionSheetController
+} from "ionic-angular";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { Camera } from "@ionic-native/camera";
-import { TabsPage } from '../tabs/tabs';
+import { TabsPage } from "../tabs/tabs";
+import { LoginPage } from "../login/login";
+import { LoadingProvider } from "../../providers/loading";
 
 @IonicPage()
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html',
+  selector: "page-profile",
+  templateUrl: "profile.html"
 })
 export class ProfilePage {
-
-  token:any;
-  user:any;
-  family:any;
-  detail:any;
-  dataUser:any;
-  dataFamily:any;
-  dataDetail:any;
-  statusAdd:boolean;
-  kepalaKeluarga:string;
-  desa:string;
-  alamat:string;
-  foto:any;
+  token: any;
+  user: any;
+  family: any;
+  detail: any;
+  dataUser: any;
+  dataFamily: any;
+  dataDetail: any;
+  statusAdd: boolean;
+  kepalaKeluarga: string;
+  desa: string;
+  alamat: string;
+  foto: any;
   base64Image: string;
   rgn_subdistrict = [];
   constructor(
+    public loadingProvider: LoadingProvider,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     public data: DataProvider,
     public http: Http,
-    public navCtrl: NavController, 
-    public navParams: NavParams) {
-  }
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {}
 
   ionViewDidLoad() {
     this.statusAdd = false;
     this.token = localStorage.getItem("tokenPatriot");
-    console.log('ionViewDidLoad ProfilePage');
+    console.log("ionViewDidLoad ProfilePage");
     this.getCurrentUser();
     this.getFamilyByPatriot();
-    this.getDetailFamily();
-
+    // this.getDetailFamily();
   }
   edit() {
-    console.log('ionViewDidLoad ProfilePage');    
+    console.log("ionViewDidLoad ProfilePage");
   }
   addNewFamily() {
-    this.data.addFamily(this.token,this.kepalaKeluarga,this.desa,this.alamat,this.foto).then(response=> {
-      console.log("new family uploaded", response);
-      this.navCtrl.setRoot(TabsPage);
-      this.statusAdd = false;
-    }).catch(err => {
-      console.log("upload family error", err);
-      this.statusAdd = false;
-    })
+    this.loadingProvider.show();
+    this.data
+      .addFamily(
+        this.token,
+        this.kepalaKeluarga,
+        this.desa,
+        this.alamat,
+        this.foto
+      )
+      .then(response => {
+        console.log("new family uploaded", response);
+        this.navCtrl.setRoot(TabsPage);
+        this.statusAdd = false;
+        this.loadingProvider.hide();
+      })
+      .catch(err => {
+        console.log("upload family error", err);
+        this.statusAdd = false;
+      });
   }
   getCurrentUser() {
+    this.loadingProvider.show();
     this.data.currentUser(this.token).then(user => {
       this.dataUser = user;
       this.user = this.dataUser.data;
       console.log("user profile", this.user);
       localStorage.setItem("currentUserPatriot", JSON.stringify(this.user));
+      this.loadingProvider.hide();
     });
   }
   getFamilyByPatriot() {
+    this.loadingProvider.show();
     this.data.familyByPatriot(this.token).then(family => {
       let temp = [];
-      this.dataFamily = family
-      this.family = this.dataFamily.data;
-      for(var i=0; i<this.family.length; i++) {
-        temp[i] = this.family[i].rgn_subdistrict;
+      this.dataFamily = family;
+      if (this.dataFamily.status == false) {
+        this.navCtrl.parent.parent.setRoot(LoginPage);
+        localStorage.removeItem("tokenPatriot");
+        this.loadingProvider.hide();
+      } else {
+        this.family = this.dataFamily.data;
+        console.log("keluarga yang di pantau", this.dataFamily.data);
+        if (this.family != "undefined") {
+          for (var i = 0; i < this.family.length; i++) {
+            temp[i] = this.family[i].rgn_subdistrict;
+          }
+          this.rgn_subdistrict = temp;
+        }
+        this.loadingProvider.hide();
       }
-      this.rgn_subdistrict = temp;
-      console.log("poor family", this.dataFamily);
     });
   }
-  getDetailFamily() {
-    let idsementara = 14;
-    this.data.detailFamily(idsementara,this.token).then(detailFamily => {
-      this.dataDetail = detailFamily;
-      this.detail = this.dataDetail.data;
-      console.log("detail family", this.dataDetail);
-    });
-  }
+  // getDetailFamily() {
+  //   let idsementara = 14;
+  //   this.data.detailFamily(idsementara, this.token).then(detailFamily => {
+  //     this.dataDetail = detailFamily;
+  //     this.detail = this.dataDetail.data;
+  //     console.log("detail family", this.dataDetail);
+  //   });
+  // }
   statusAddFamily() {
     this.statusAdd = true;
   }
   close() {
     this.statusAdd = false;
   }
-  
+
   uploadPicture() {
     console.log("clicked");
     let actionSheet = this.actionSheetCtrl.create({
@@ -143,7 +172,7 @@ export class ProfilePage {
         destinationType: this.camera.DestinationType.DATA_URL,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         targetWidth: 600,
-        targetHeight: 600,
+        targetHeight: 600
       })
       .then(
         imageData => {
@@ -153,5 +182,10 @@ export class ProfilePage {
         err => {}
       );
   }
-
+  logout() {
+    this.loadingProvider.show();
+    localStorage.removeItem("tokenPatriot");
+    this.navCtrl.parent.parent.setRoot(LoginPage);
+    this.loadingProvider.hide();
+  }
 }
