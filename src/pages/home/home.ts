@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { Chart } from "chart.js";
 import { Http } from "@angular/http";
+import { DataProvider } from "../../providers/data/data";
+
 import "rxjs/add/operator/map";
 declare var google: any;
 
@@ -19,17 +21,21 @@ export class HomePage {
   pieChart: any;
   lineChart: any;
   barChart: any;
-  constructor(public http: Http, public navCtrl: NavController) {}
+
+  constructor(
+    public data: DataProvider,
+    public http: Http, 
+    public navCtrl: NavController) {}
   ionViewDidLoad() {
     this.pieChart = this.getPieChart();
     this.barChart = this.getBarChart();
     this.lineChart = this.getLineChart();
-
     setTimeout(() => {
       this.displayGoogleMap();
       this.getMarkers();
     }, 200);  
   }  
+
   getChart(context, chartType, data, options?) {
     return new Chart(context, {
       data,
@@ -182,17 +188,15 @@ export class HomePage {
       infowindow.open(this.map, marker);
     });
   }
-
   getMarkers() {
     this.http
-      .get("../assets/json/marker.json")
+      .get("assets/json/marker.json")
       .map(res => res.json())
       .subscribe(data => {
         // console.log("data", data);
         this.addMarkersToMap(data);
       });
   }
-
   addMarkersToMap(markers) {
     for (let marker of markers) {
       // console.log("marks", marker);

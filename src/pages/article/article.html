@@ -2,23 +2,22 @@
   <div class="header">
     <h3 class="tab-profile">Artikel</h3>
   </div>
-  <div class="card">
-    <img class="ava" src="../assets/imgs/logo.png">
-    <span class="head">oleh
-      <b>Guntur Putra pratama</b>
+  <div class="card" *ngFor="let article of articles;let i = index">
+    <img class="ava" src="http://patriotpangan.com/nodejs/public/images/artikels/{{article.pathfoto}}">
+    <span *ngIf="penulis" class="head">oleh
+      <b >{{penulis[i]}}</b>
     </span>
     <br>
-    <span class="head">untuk detik.com
-      <span class="right">21 Maret 2017</span>
+    <span class="head">untuk {{article.sumberarktikel}}
+      <span class="right">{{article.createdAt | date: 'dd MMMM yyyy'}}</span>
     </span>
     <div class="border"></div>
-    <br><br>
-    <h1 class="title">Judul Berita</h1>
-    <p class="content">Isinya lorepsumlorepsumlorepsumlorepsumlorepsumlorepsum lorepsumlorepsumlorepsumlorepsum lorepsumlorepsumlorepsumlorepsumlorepsumlorepsum
-      lorepsumlorepsumlorepsumlorepsumlorepsum
-    </p>
+    <br>
+    <br>
+    <h1 class="title">{{article.judul}}</h1>
+    <p class="content">{{article.isi}}</p>
     <div class="readmore">
-      <button (click)="readmore()">Baca Selengkapnya
+      <button (click)="readmore(article)">Baca Selengkapnya
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </div>

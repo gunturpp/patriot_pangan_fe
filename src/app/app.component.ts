@@ -8,13 +8,14 @@ import { ArticleDetailPage } from '../pages/article-detail/article-detail';
 import { ProfilePage } from '../pages/profile/profile';
 import { ReportPage } from '../pages/report/report';
 import { FormulirPage } from '../pages/formulir/formulir';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
-  // rootPage:any = FormulirPage;
+  // rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

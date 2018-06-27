@@ -5,6 +5,8 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
+import { Camera } from '@ionic-native/camera';
 
 import { ReportPage } from '../pages/report/report';
 import { ProfilePage } from '../pages/profile/profile';
@@ -36,7 +38,8 @@ import { DataProvider } from '../providers/data/data';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,6 +56,7 @@ import { DataProvider } from '../providers/data/data';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GoogleMapsProvider,
     ConnectivityProvider,

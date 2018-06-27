@@ -5,15 +5,10 @@
   Ionic pages and navigation.
 -->
 
-<ion-content>
+<ion-content *ngIf="detailArtikel">
   <ion-icon class="btn-back" (click)="pop()" name="md-arrow-round-back">&nbsp;&nbsp;Kembali ke Artikel</ion-icon>
-  <h1 class="title">Judul</h1>
-  <p class="sub-head"><b>Guntur Putra Pratama</b> untuk Detik.com <span class="date">21 Maret 2017</span></p>
-  <img class="picture" src="../assets/imgs/pangandaran.jpg">
-  <p class="content">
-    Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum 
-      Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum 
-      Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum 
-      Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum  Lorepsum 
-  </p>
+  <h1 class="title">{{detailArtikel.judul}}</h1>
+  <p class="sub-head"><b *ngIf="penulis">{{penulis}}</b> untuk {{detailArtikel.sumberarktikel}} <span class="date">{{detailArtikel.createdAt | date: 'dd MMMM yyyy'}}</span></p>
+  <img class="picture" src="http://patriotpangan.com/nodejs/images/artikels/{{detailArtikel.pathfoto}}">
+  <p class="content">{{detailArtikel.isi}}</p>
 </ion-content>

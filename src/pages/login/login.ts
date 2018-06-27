@@ -1,25 +1,69 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { DataProvider } from "../../providers/data/data";
+import { TabsPage } from "../tabs/tabs";
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: "page-login",
+  templateUrl: "login.html"
 })
 export class LoginPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
+  email = "patriot@gmail.com";
+  password = "11111111";
+  nama = "test1";
+  gender = 1;
+  fk_desaid = 1;
+  alamat = "jl.s.kampar";
+  foto = "wkwk";
+  constructor(
+    public data: DataProvider,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {}
+  protected user: any;
+  protected token: any;
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    console.log("ionViewDidLoad LoginPage");
+    if(localStorage.getItem('tokenPatriot')) {
+     this.navCtrl.setRoot(TabsPage);
+    }
+    console.log("new token",localStorage.getItem('status'));
   }
+  // Login user from DataProvider
+  signIn() {
+    this.data
+      .signIn(this.email, this.password)
+      .then(user => {
+        this.user = user;
+        console.log("user", this.user);
 
+        // save token to localstorage
+        localStorage.setItem("tokenPatriot", this.user.token);
+      })
+      .then(success => {
+        this.navCtrl.setRoot(TabsPage);
+      })
+      .catch(err => {
+        console.log("error", err);
+      });
+  }
+  // Register user from DataProvider
+  signUp() {
+    console.log("clicked");
+
+    this.data
+      .signUpUser(
+        this.email,
+        this.password,
+        this.nama,
+        this.gender,
+        this.fk_desaid,
+        this.alamat,
+        this.foto
+      )
+      .then(response => {
+        console.log("response", response);
+      });
+  }
 }

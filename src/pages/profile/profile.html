@@ -1,4 +1,18 @@
-<ion-content>
+<ion-content *ngIf="user">
+  <!-- family add -->
+  <div *ngIf="statusAdd" class="familyContainer">
+    <h2>Masukkan identitas keluarga baru</h2>
+    <ion-input type="text" [(ngModel)]="kepalaKeluarga" placeholder="Nama Kepala Keluarga"></ion-input>
+    <ion-input type="text" [(ngModel)]="desa" placeholder="Nama Desa"></ion-input>
+    <ion-textarea type="text" rows="4" [(ngModel)]="alamat" placeholder="Alamat"></ion-textarea>
+    <div class="addPicFamily">
+      <!-- <img tappable (click)="uploadPicture()" src="patriotpangan.com/nodejs/public/images/{{pathfoto}}"/> -->
+      <img tappable (click)="uploadPicture()" src="assets/imgs/default.png" />
+    </div>
+    <button ion-button medium full (click)="addNewFamily()">Tambah Keluarga</button>
+    <br>
+    <ion-icon name="close" (click)="close()"></ion-icon>
+  </div>
   <div class="header">
     <h3 class="tab-profile">Profile</h3>
   </div>
@@ -9,38 +23,44 @@
     <button class="btn-edit" (click)="edit()">
       <ion-icon name="md-create"></ion-icon>
     </button>
-    <img class="avatar" src="../assets/imgs/pangandaran.jpg">
-    <p class="name">Arga Putra Panatagama
+    <img class="avatar" src="http://patriotpangan.com/nodejs/express/public/images/{{user.pathfoto}}">
+    <p class="name">{{user.nama}}
       <br>
-      <span class="address">Desa Babakan, Kec. Dramaga, Bogor, Jawa Barat</span>
+      <span class="address">{{user.alamat}}, Bogor</span>
     </p>
     <div class="border"></div>
     <ion-row>
       <ion-col>
         <span class="report">15</span>
         <div class="keterangan">Laporan terkirim</div>
-        <div class="border"></div>        
+        <div class="border"></div>
       </ion-col>
       <ion-col>
-        <span class="report">1 Thn</span>
+        <span class="report">{{user.lamabergabung}}</span>
         <div class="keterangan">Lama bergabung</div>
         <div class="border"></div>
       </ion-col>
     </ion-row>
     <h6>Keluarga yang Dipantau</h6>
-    <img class="avatar-family" src="../assets/imgs/pangandaran.jpg">
-    <p class="family">Keluarga Bapak Guntur Putra
-      <br> Desa Babakan RT 01/017
-      <br> Kondisi pangan saat ini:
-      <span style="color:greenyellow">Rawan Pangan 1</span>
-    </p>
-
-    <div class="add-family">+ Keluarga yang ingin dipantau</div>
+    <div *ngIf="family == null">
+      <h3>Tidak ada keluarga yang dipantau</h3>
+    </div>
+    <div  *ngIf="family != null">
+      <div class="allFamily" *ngFor="let fam of family; let iter = index">
+        <img class="avatar-family" src="patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
+        <p class="family">Keluarga {{fam.namakeluarga}}
+          <br><span *ngIf="rgn_subdistrict">{{rgn_subdistrict[iter].name}}</span>
+          <br> Kondisi pangan saat ini:
+          <span style="color:greenyellow">Rawan Pangan 1</span>
+        </p>
+      </div>
+    </div>
+    <div class="add-family" (click)="statusAddFamily()">+ Keluarga yang ingin dipantau</div>
     <h4>Penghargaan</h4>
     <div class="achievements">
-      <img class="achievements-img" src="../assets/imgs/profile/achievement1.png">
-      <img class="achievements-img" src="../assets/imgs/profile/achievement2.png">
-      <img class="achievements-img" src="../assets/imgs/profile/achievement3.png">
+      <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
+      <img class="achievements-img" src="assets/imgs/profile/achievement2.png">
+      <img class="achievements-img" src="assets/imgs/profile/achievement3.png">
     </div>
     <ion-row>
       <ion-col>
