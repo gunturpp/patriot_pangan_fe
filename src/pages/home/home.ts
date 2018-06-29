@@ -243,7 +243,7 @@ export class HomePage {
         ],
         datasets: [
           {
-            label: "Taraf",
+            label: "Taraf Kerawanan",
             fill: false,
             lineTension: 0.1,
             // backgroundColor: "#000",

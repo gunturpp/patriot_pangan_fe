@@ -301,8 +301,11 @@ export class DataProvider {
     let options = new RequestOptions({ headers: headers });
     return new Promise(resolve => {
       this.authHttp.get(this.apiGetArtikel, options).subscribe(data => {
-        resolve(data.json());
-      });
+        resolve(data);
+      }),
+        err => {
+          alert("Terjadi kesalahan, silahkan coba kembali");
+        };
     });
   }
   // all family, not really needed

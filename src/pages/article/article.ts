@@ -40,12 +40,8 @@ export class ArticlePage {
         let temp: any;
         let admin = [];
         temp = article;
-        if (temp.status == false) {
-          // this.navCtrl.parent.parent.setRoot(LoginPage);
-          // localStorage.removeItem("tokenPatriot");
-          this.loadingProvider.hide();
-        } else {
-          this.articles = temp.data;
+        if (temp.status == 200) {
+          this.articles = temp.json().data;
           console.log("artikel", this.articles);
           for (var i = 0; i < this.articles.length; i++) {
             admin[i] = this.articles[i].admin;
@@ -53,6 +49,9 @@ export class ArticlePage {
           }
           console.log("admin", admin);
           console.log("penulis", this.penulis);
+          this.loadingProvider.hide();
+        } else {
+          alert("Terjadi kesalahan. Silahkan coba lagi")
           this.loadingProvider.hide();
         }
       })

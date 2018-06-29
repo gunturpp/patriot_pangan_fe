@@ -3,7 +3,7 @@
     <h3 class="tab-profile">Artikel</h3>
   </div>
   <!-- <div *ngFor="let article of articles;let i = index"> -->
-    <h3 *ngIf="articles == 0">Tidak ada artikel tersedia.</h3>
+  <h3 *ngIf="articles == 0">Tidak ada artikel tersedia.</h3>
   <!-- </div> -->
   <div *ngIf="articles != null">
 
@@ -13,7 +13,11 @@
         <b>{{penulis[i]}}</b>
       </span>
       <br>
-      <span class="head">untuk {{article.sumberarktikel}}
+      <span *ngIf="article.sumberarktikel == null" class="head">untuk : -
+        <span class="right">{{article.createdAt | date: 'dd MMMM yyyy'}}</span>
+      </span>
+
+      <span *ngIf="article.sumberarktikel" class="head">untuk {{article.sumberarktikel}}
         <span class="right">{{article.createdAt | date: 'dd MMMM yyyy'}}</span>
       </span>
       <div class="border"></div>

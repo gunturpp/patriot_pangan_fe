@@ -6,8 +6,6 @@ import {
   ToastController
 } from "ionic-angular";
 import { DataProvider } from "../../providers/data/data";
-import { TabsPage } from "../tabs/tabs";
-import { SignupPage } from "../signup/signup";
 import { LoadingProvider } from "../../providers/loading";
 
 @IonicPage()
@@ -20,6 +18,8 @@ export class LoginPage {
   password: any;
   statusRegister: any = false;
   showPassword: boolean;
+  user:any;
+  public token: any;
   constructor(
     public loading: LoadingProvider,
     public toastCtrl: ToastController,
@@ -27,8 +27,6 @@ export class LoginPage {
     public navCtrl: NavController,
     public navParams: NavParams
   ) {}
-  protected user: any;
-  public token: any;
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
     if (
@@ -39,7 +37,7 @@ export class LoginPage {
     } else {
       this.navCtrl.setRoot("TabsPage");
     }
-    // console.log("new token",localStorage.getItem('status'));
+
   }
   // Login user from DataProvider
   signIn() {
