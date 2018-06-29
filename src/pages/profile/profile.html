@@ -1,4 +1,4 @@
-<ion-content  *ngIf="user" >
+<ion-content *ngIf="user">
   <!-- family add -->
   <div *ngIf="statusAdd" class="familyContainer">
     <ion-icon name="close" class="close" (click)="close()"></ion-icon>
@@ -14,9 +14,33 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="key"></ion-icon>
+          <ion-icon name="home"></ion-icon>
         </ion-label>
-        <ion-input type="text" [(ngModel)]="desa" placeholder="Nama Desa"></ion-input>
+        <ion-input required name="provinsi" disabled placeholder="Provinsi" tappable (click)="alertProvince()" value="{{province}}"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="home"></ion-icon>
+        </ion-label>
+        <ion-input equired name="kabupaten" disabled placeholder="Kabupaten" tappable (click)="alertKabupaten()" value="{{kabupaten}}"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="home"></ion-icon>
+        </ion-label>
+        <ion-input required name="kecamatan" disabled placeholder="Kecamatan" tappable (click)="alertKecamatan()" value="{{kecamatan}}"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="home"></ion-icon>
+        </ion-label>
+        <ion-input required name="kelurahan" disabled placeholder="Kelurahan" tappable (click)="alertKelurahan()" value="{{kelurahan}}"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -29,8 +53,10 @@
     <div class="addPicFamily">
       <!-- <img tappable (click)="uploadPicture()" src="patriotpangan.com/nodejs/public/images/{{pathfoto}}"/> -->
       <img tappable (click)="uploadPicture()" src="assets/imgs/default.png" />
+      <img tappable *ngIf="foto" (click)="uploadPicture()" src="{{foto}}" />
     </div>
-    <button ion-button medium full (click)="addNewFamily()">Tambah Keluarga</button>
+    <button *ngIf="foto && alamat && kepalaKeluarga" ion-button medium full (click)="addNewFamily()">Tambah Keluarga</button>
+    <button *ngIf="!foto && !alamat && !kepalaKeluarga" disabled ion-button medium full (click)="addNewFamily()">Tambah Keluarga</button>
     <br>
   </div>
   <div class="header">
@@ -43,7 +69,7 @@
     <button class="btn-edit" (click)="edit()">
       <ion-icon name="md-create"></ion-icon>
     </button>
-    <img class="avatar" src="https://patriotpangan.com/nodejs/express/{{user.pathfoto}}">
+    <img class="avatar" src="http://patriotpangan.com/nodejs{{user.pathfoto}}">
     <p class="name">{{user.nama}}
       <br>
       <span class="address">{{user.alamat}}, Bogor</span>
@@ -51,7 +77,7 @@
     <div class="border"></div>
     <ion-row>
       <ion-col>
-        <span class="report">15</span>
+        <span *ngIf="sumReports" class="report">{{sumReports.laporanterkirim}}</span>
         <div class="keterangan">Laporan terkirim</div>
         <div class="border"></div>
       </ion-col>
@@ -67,18 +93,42 @@
     </div>
     <div *ngIf="family != null">
       <div class="allFamily" *ngFor="let fam of family; let iter = index">
-        <img class="avatar-family" src="https://patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
+        <img class="avatar-family" src="http://patriotpangan.com/nodejs/public/images/keluargaMiskins/{{fam.pathfoto}}">
         <p class="family">Keluarga {{fam.namakeluarga}}
           <br>
           <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[iter].name}}</span>
           <br> Kondisi pangan saat ini:
-          <span style="color:greenyellow">Rawan Pangan 1</span>
+          <!-- 00aa00 adff2f ffff00 ff0000 b03060 -->
+          <span *ngIf="fam.status == 0" style="color:blue">Aman</span>
+          <span *ngIf="fam.status == 1" style="color:#00aa00">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 2" style="color:#adff2f">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 3" style="color:#ffff00">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 4" style="color:#ff0000">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 4" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
         </p>
       </div>
     </div>
     <div class="add-family" (click)="statusAddFamily()">+ Keluarga yang ingin dipantau</div>
     <h4>Penghargaan</h4>
-    <div class="achievements">
+    <div class="achievements" *ngIf="sumReports.laporanterkirim < 3">
+      <img class="achievements-empty">
+      <img class="achievements-empty">
+      <img class="achievements-empty">
+    </div>
+
+    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 3">
+      <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
+      <img class="achievements-empty">
+      <img class="achievements-empty">
+    </div>
+
+    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 5">
+      <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
+      <img class="achievements-img" src="assets/imgs/profile/achievement2.png">
+      <img class="achievements-empty" src="assets/imgs/profile/achievement3.png">
+    </div>
+
+    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 10">
       <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
       <img class="achievements-img" src="assets/imgs/profile/achievement2.png">
       <img class="achievements-img" src="assets/imgs/profile/achievement3.png">
@@ -86,15 +136,18 @@
     <ion-row>
       <ion-col>
         <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
-        <span class="report">3x</span>
+        <span *ngIf="sumReports.laporanterkirim < 3" class="report">Not yet</span>
+        <span *ngIf="sumReports.laporanterkirim >= 3" class="report">3x</span>
       </ion-col>
       <ion-col>
         <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
-        <span class="report">5x</span>
+        <span *ngIf="sumReports.laporanterkirim < 5" class="report">Not yet</span>
+        <span *ngIf="sumReports.laporanterkirim >= 3" class="report">3x</span>
       </ion-col>
       <ion-col>
         <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
-        <span class="report">10x</span>
+        <span *ngIf="sumReports.laporanterkirim < 10" class="report">Not yet</span>
+        <span *ngIf="sumReports.laporanterkirim >= 10" class="report">10x ++</span>
       </ion-col>
     </ion-row>
 

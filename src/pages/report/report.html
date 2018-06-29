@@ -10,12 +10,18 @@
       <h3>Tidak ada keluarga yang dipantau</h3>
     </div>
       <div (click)="returnId(fam.id)" class="card" *ngFor="let fam of family;let i = index">
-        <img class="avatar-family" src="https://patriotpangan.com/nodejs/express/public/images/keluargaMiskins/{{fam.pathfoto}}">
+        <img class="avatar-family" src="https://patriotpangan.com/nodejs/public/images/keluargaMiskins/{{fam.pathfoto}}">
         <p class="family">Keluarga {{fam.namakeluarga}}
           <br>
           <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[i].name}}</span>
           <br> Kondisi pangan saat ini:
-          <span style="color:greenyellow">Rawan Pangan 1</span>
+          <!-- 00aa00 adff2f ffff00 ff0000 b03060 -->
+          <span *ngIf="fam.status == 0" style="color:#000fff">Aman</span>
+          <span *ngIf="fam.status == 1" style="color:#00aa00">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 2" style="color:#adff2f">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 3" style="color:#ffff00">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 4" style="color:#ff0000">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 4" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
         </p>
       </div>
     </div>

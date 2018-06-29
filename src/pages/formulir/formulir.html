@@ -80,7 +80,8 @@
     <!-- slide 8 -->
     <ion-slide>
       <div class="footer1">
-        <button class="btn-submit" ion-button (click)="submit()">OK</button>
+        <button *ngIf="!soal1 && !soal2 && !soal3" disabled class="btn-submit" ion-button (click)="submit()">Pilih Jawaban</button>
+        <button *ngIf="soal1 && soal2 && soal3" class="btn-submit" ion-button (click)="submit()">OK</button>
       </div>
       <!-- soal 1 -->
       <p style="padding: 10px;">Terakhir, yuk laporkan kondisi lingkunganmu!</p>
@@ -142,11 +143,12 @@
         <button class="btn-submit" ion-button (click)="done()">Selesai</button>
       </div>
 
-      <div class="upload-foto" (click)="uploadPicture()" src="assets/imgs/pangandaran.jpg">
-        <ion-icon class="camCss" name="camera"></ion-icon>
+      <div class="upload-foto" (click)="uploadPicture()">
+        <ion-icon *ngIf="!foto" class="camCss" name="camera"></ion-icon>
+        <img *ngIf="foto" src="{{foto}}"/>
       </div>
       <p class="question">Kerja bagus! Tambahkan deskripsi dan foto untuk memperkuat laporan kamu.</p>
-      <ion-textarea class="input-comment" autocorrect="on" max="1000" type="text" autocomplete="on" rows="5" placeholder="Tulis deskripsi kerawanan pangan di daerahmu..."></ion-textarea>
+      <ion-textarea ([ngMpdel])="deskripsi" class="input-comment" autocorrect="on" max="1000" type="text" autocomplete="on" rows="5" placeholder="Tulis deskripsi kerawanan pangan di daerahmu..."></ion-textarea>
 
     </ion-slide>
 

@@ -1,8 +1,15 @@
 page-login {
-    h1 {
-        text-align: center;
-    }
-    .btnLogin {
-        background-color: $patriotPink;
-    }
+  text-align: center;
+  .btnLogin {
+    background-color: $patriotPink;
+    width: 50%;
+  }
+  .signup {
+    color: $patriotPink;
+  }
+  .btn-unlock {
+    z-index: 10;
+  }
+  ion-icon {
+  }
 }

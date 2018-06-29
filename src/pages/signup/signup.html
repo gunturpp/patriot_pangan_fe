@@ -1,0 +1,97 @@
+<!--
+  Generated template for the SignupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="patriotPink">
+    <ion-title>Registrasi</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="people"></ion-icon>
+      </ion-label>
+      <ion-input required class="pdg" type="text" [(ngModel)]="nama" item-right placeholder="Nama"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="mail"></ion-icon>
+      </ion-label>
+      <ion-input required class="pdg" type="email" [(ngModel)]="email" item-right placeholder="Email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="key"></ion-icon>
+      </ion-label>
+      <ion-input required type="text" *ngIf="showPassword" name="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      <ion-input required type="password" *ngIf="!showPassword" name="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      <ion-icon class="btn-unlock" *ngIf="!showPassword" item-right name="eye" (click)="showPassword = !showPassword">
+      </ion-icon>
+      <ion-icon class="btn-unlock" *ngIf="showPassword" item-right name="eye-off" (click)="showPassword = !showPassword">
+      </ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="heart"></ion-icon>
+      </ion-label>
+      <ion-input required disabled placeholder="Jenis Kelamin" tappable (click)="alertGender()" value="{{gendernya}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-label>
+      <ion-input required name="provinsi" disabled placeholder="Provinsi" tappable (click)="alertProvince()" value="{{province}}"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-label>
+      <ion-input required name="kabupaten" disabled placeholder="Kabupaten" tappable (click)="alertKabupaten()" value="{{kabupaten}}"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-label>
+      <ion-input required name="kecamatan" disabled placeholder="Kecamatan" tappable (click)="alertKecamatan()" value="{{kecamatan}}"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-label>
+      <ion-input required name="kelurahan" disabled placeholder="Kelurahan" tappable (click)="alertKelurahan()" value="{{kelurahan}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <ion-icon name="home"></ion-icon>
+      </ion-label>
+      <ion-textarea required rows="4" type="text" [(ngModel)]="alamat" placeholder="Alamat"></ion-textarea>
+    </ion-item>
+    <div class="btnPic">
+      <button ion-button small (click)="uploadPicture()">Upload Foto</button>
+    </div>
+    <img *ngIf="foto" src="{{foto}}">
+  </ion-list>
+  <div class="btn">
+    <button *ngIf="email && password && nama && gender && alamat && foto" class="btnSignup" ion-button (click)="goSignUp()">Registrasi</button>
+    <button *ngIf="!email || !password || !nama || !gender || !alamat || !foto" disabled class="btnSignup" ion-button (click)="goSignUp()">Registrasi</button>
+  </div>
+
+</ion-content>

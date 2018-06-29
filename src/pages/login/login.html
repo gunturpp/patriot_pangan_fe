@@ -1,15 +1,29 @@
 <ion-content padding>
-  <img src="assets/imgs/splashori.jpg">
-  <h1><b>Halo, Selamat Datang!</b></h1>
-  <ion-item>
-      <ion-icon name="mail"></ion-icon>
-      <ion-input [(ngModel)]="email" type="email" placeholder="Email"></ion-input>
-  </ion-item>
-  <ion-item>
-      <ion-icon name="key"></ion-icon>
-      <ion-input [(ngModel)]="password"  type="password" placeholder="Password"></ion-input>
-  </ion-item>
+    <img src="assets/imgs/splashori.jpg">
+    <h1>
+        <b>Halo, Selamat Datang!</b>
+    </h1>
+    <ion-item>
+        <ion-label>
+            <ion-icon name="mail"></ion-icon>
+        </ion-label>
+        <ion-input [(ngModel)]="email" type="email" placeholder="Email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>
+            <ion-icon name="key"></ion-icon>
+        </ion-label>
+        <ion-input type="text" *ngIf="showPassword" name="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+        <ion-input type="password" *ngIf="!showPassword" name="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+        <ion-icon class="btn-unlock" *ngIf="!showPassword" item-right name="eye" (click)="showPassword = !showPassword">
+        </ion-icon>
+        <ion-icon class="btn-unlock" *ngIf="showPassword" item-right name="eye-off" (click)="showPassword = !showPassword">
+        </ion-icon>
+    </ion-item>
 
-  <button class="btnLogin" ion-button small full (click)="signIn()">Login</button>
-  <!-- <button ion-button small full (click)="signUp()">SignUp</button> -->
+    <button *ngIf="email && password" class="btnLogin" ion-button (click)="signIn()">Login</button>
+    <button *ngIf="!email || !password" disabled class="btnLogin" ion-button (click)="signIn()">Login</button>
+    <p class="signup" (click)="signUp()">Pengguna baru?
+        <b>Sign up</b>
+    </p>
 </ion-content>

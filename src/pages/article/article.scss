@@ -6,6 +6,12 @@ page-article {
     background-color: $patriotBlue;
     margin-bottom: 30px;
   }
+  h3 {
+    padding: 0px 20px;
+    text-align: center;
+    color: #fff !important;
+  }
+
   .container {
     background-color: $patriotBlue;
   }
@@ -31,6 +37,10 @@ page-article {
       height: 50px;
       width: 50px;
       border-radius: 100%;
+    }
+    h3 {
+      text-align: center;
+      color: #fff !important;
     }
     h1.title {
       text-align: left !important;

@@ -4,9 +4,9 @@ import {
   ActionSheetController,
   NavController,
   NavParams,
-  Slides
+  Slides,
+  ToastController
 } from "ionic-angular";
-import { HomePage } from "../home/home";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { TabsPage } from "../tabs/tabs";
@@ -48,11 +48,11 @@ export class FormulirPage {
     public data: DataProvider,
     public http: Http,
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public toastCtrl: ToastController
   ) {}
 
-  ionViewDidLoad() {
-    this.foto = "null";
+  ionViewDidEnter() {
     this.idFamily = this.navParams.get("idFamily");
     console.log("ionViewDidLoad FormulirPage. id :", this.idFamily);
   }
@@ -189,14 +189,29 @@ export class FormulirPage {
       )
       .then(success => {
         this.loadingProvider.hide();
-
-        this.navCtrl.setRoot(TabsPage);
+        this.addReportToast();
+        this.navCtrl.setRoot('TabsPage');
         console.log("success upload repord", success);
       })
       .catch(err => {
         this.loadingProvider.hide();
+        this.failReportToast();
         console.log("error upload report", err);
       });
+  }
+  addReportToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Berhasil menambahkan keluarga baru',
+      duration: 3000,
+    });
+    toast.present();
+  }
+  failReportToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Gagal menambahkan laporan baru',
+      duration: 3000,
+    });
+    toast.present();
   }
   uploadPicture() {
     console.log("clicked");
@@ -225,7 +240,7 @@ export class FormulirPage {
     this.camera
       .getPicture({
         quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
+        destinationType: this.camera.DestinationType.FILE_URI,
         sourceType: this.camera.PictureSourceType.CAMERA,
         mediaType: this.camera.MediaType.PICTURE,
         encodingType: this.camera.EncodingType.PNG,
@@ -235,8 +250,8 @@ export class FormulirPage {
       })
       .then(
         imageData => {
-          this.base64Image = "data:image/png;base64," + imageData;
-          this.foto = this.base64Image;
+          // this.base64Image = "data:image/png;base64," + imageData;
+          this.foto = imageData;
         },
         err => {
           alert(err);
@@ -246,15 +261,15 @@ export class FormulirPage {
   getPhotoFromGallery() {
     this.camera
       .getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
+        destinationType: this.camera.DestinationType.FILE_URI,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         targetWidth: 600,
         targetHeight: 600
       })
       .then(
         imageData => {
-          this.base64Image = "data:image/png;base64," + imageData;
-          this.foto = this.base64Image;
+          // this.base64Image = "data:image/png;base64," + imageData;
+          this.foto = imageData;
         },
         err => {}
       );

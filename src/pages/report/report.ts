@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams,ToastController } from "ionic-angular";
 import { FormulirPage } from "../formulir/formulir";
 import { DataProvider } from "../../providers/data/data";
 import { LoginPage } from "../login/login";
@@ -17,18 +17,19 @@ export class ReportPage {
   idFamily: any;
   rgn_subdistrict = [];
   constructor(
-    public loadingProvider: LoadingProvider,
+    public loading: LoadingProvider,
     public data: DataProvider,
     public navCtrl: NavController,
+    public toastCtrl: ToastController,
     public navParams: NavParams
   ) {}
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     console.log("ionViewDidLoad ReportPage");
     this.getFamilyByPatriot();
   }
   createReport() {
-    this.navCtrl.setRoot(FormulirPage, {
+    this.navCtrl.setRoot('FormulirPage', {
       idFamily: this.idFamily
     });
     // hide tabs
@@ -44,25 +45,31 @@ export class ReportPage {
     console.log("id", idFamily);
     this.idFamily = idFamily;
   }
+  failToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Gagal meminta data',
+      duration: 3000,
+    });
+    toast.present();
+  }
   getFamilyByPatriot() {
-    this.loadingProvider.show();
+    this.loading.show();
+    let temp = [];
     this.data.familyByPatriot(this.token).then(family => {
-      let temp = [];
       this.dataFamily = family;
-      if (this.dataFamily.status == false) {
-        this.navCtrl.parent.parent.setRoot(LoginPage);
-        localStorage.removeItem("tokenPatriot");
-        this.loadingProvider.hide();
-      } else {
+      if (this.dataFamily.status = true) {
+        if (this.dataFamily != true) {
         this.family = this.dataFamily.data;
-        console.log("keluarga yang di pantau", this.dataFamily.data);
-        if (this.family != "undefined") {
+        console.log("family", this.family);
           for (var i = 0; i < this.family.length; i++) {
             temp[i] = this.family[i].rgn_subdistrict;
           }
           this.rgn_subdistrict = temp;
         }
-        this.loadingProvider.hide();
+        this.loading.hide();
+      } else {
+        console.log("gagal get api family by patriot");
+        this.loading.hide();
       }
     });
   }

@@ -4,9 +4,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HttpModule } from "@angular/http";
+import { Http, HttpModule } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera';
+import { AuthHttp , JwtHelper, AuthConfig} from 'angular2-jwt';
+import { Storage ,IonicStorageModule } from '@ionic/storage';
 
 import { ReportPage } from '../pages/report/report';
 import { ProfilePage } from '../pages/profile/profile';
@@ -22,48 +24,71 @@ import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/goog
 // import { DatProvider } from '../providers/dat/dat';
 import { DataProvider } from '../providers/data/data';
 import { LoadingProvider } from '../providers/loading';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { SignupPage } from '../pages/signup/signup';
+
+//set the auth http for API
+export function getAuthHttp(http, Storage) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: "",
+    noJwtError: true,
+    globalHeaders: [{'Content-Type': 'application/json'}],
+    tokenGetter: (() => {return Storage.get('token')}),
+  }), http);
+}
 
 
 @NgModule({
   declarations: [
-    FormulirPage,
+    // SignupPage,
+    // FormulirPage,
     MyApp,
-    ArticleDetailPage,
-    ProfilePage,
-    ArticlePage,
-    LoginPage,
-    ReportPage,
-    HomePage,
-    TabsPage,
+    // ArticleDetailPage,
+    // ProfilePage,
+    // ArticlePage,
+    // LoginPage,
+    // ReportPage,
+    // HomePage,
+    // TabsPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    FormulirPage,
+    // SignupPage,
+    // FormulirPage,
     MyApp,
-    ArticleDetailPage,
-    ProfilePage,
-    ArticlePage,
-    ReportPage,
-    LoginPage,
-    HomePage,
-    TabsPage
+    // ArticleDetailPage,
+    // ProfilePage,
+    // ArticlePage,
+    // ReportPage,
+    // LoginPage,
+    // HomePage,
+    // TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    FileTransfer,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GoogleMapsProvider,
     ConnectivityProvider,
     GoogleMapsClusterProvider,
     DataProvider,
-    LoadingProvider
+    LoadingProvider,
+    JwtHelper,
+    {
+      provide: AuthHttp,
+      useFactory: getAuthHttp,
+      deps: [Http, Storage]
+    }
   ]
 })
 export class AppModule {}

@@ -1,9 +1,8 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
 import { ArticleDetailPage } from "../article-detail/article-detail";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
-import { LoginPage } from "../login/login";
 import { LoadingProvider } from "../../providers/loading";
 
 @IonicPage()
@@ -16,6 +15,7 @@ export class ArticlePage {
   articles: any;
   penulis = [];
   constructor(
+    public toastCtrl: ToastController,
     public loadingProvider: LoadingProvider,
     public data: DataProvider,
     public http: Http,
@@ -23,14 +23,14 @@ export class ArticlePage {
     public navParams: NavParams
   ) {}
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.token = localStorage.getItem("tokenPatriot");
     this.getArticle();
 
     console.log("ionViewDidLoad ArticlePage");
   }
   readmore(detail) {
-    this.navCtrl.push(ArticleDetailPage, { detail: detail });
+    this.navCtrl.push('ArticleDetailPage', { detail: detail });
   }
   getArticle() {
     this.loadingProvider.show();
@@ -41,8 +41,8 @@ export class ArticlePage {
         let admin = [];
         temp = article;
         if (temp.status == false) {
-          this.navCtrl.parent.parent.setRoot(LoginPage);
-          localStorage.removeItem("tokenPatriot");
+          // this.navCtrl.parent.parent.setRoot(LoginPage);
+          // localStorage.removeItem("tokenPatriot");
           this.loadingProvider.hide();
         } else {
           this.articles = temp.data;
@@ -59,6 +59,15 @@ export class ArticlePage {
       .catch(err => {
         console.log("error", err);
         this.loadingProvider.hide();
+        this.failToast();
       });
   }
+  failToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Gagal meminta artikel',
+      duration: 3000,
+    });
+    toast.present();
+  }
+  
 }

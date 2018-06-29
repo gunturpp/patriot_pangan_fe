@@ -13,7 +13,7 @@ export class ArticleDetailPage {
   constructor(public loadingProvider: LoadingProvider,public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.detailArtikel = this.navParams.get("detail");
     let x:any;
     x = this.detailArtikel.admin;

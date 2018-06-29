@@ -7,107 +7,112 @@ import {
   ToastController,
   AlertController
 } from "ionic-angular";
-import { Http, Headers } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
-import { Camera } from "@ionic-native/camera";
-import { TabsPage } from "../tabs/tabs";
-import { LoginPage } from "../login/login";
 import { LoadingProvider } from "../../providers/loading";
+import { Camera } from "@ionic-native/camera";
 
 @IonicPage()
 @Component({
-  selector: "page-profile",
-  templateUrl: "profile.html"
+  selector: "page-signup",
+  templateUrl: "signup.html"
 })
-export class ProfilePage {
-  token: any;
-  user: any;
-  family: any;
-  detail: any;
-  dataUser: any;
-  dataFamily: any;
-  dataDetail: any;
-  statusAdd: boolean;
-  kepalaKeluarga: string;
-  desa: any;
-  alamat: string;
+export class SignupPage {
+  email: any;
+  password: any;
+  nama: any;
+  gender: any;
+  fk_desaid: any;
+  alamat: any;
   foto: any;
-  base64Image: string;
-  rgn_subdistrict = [];
-  sumReports: any;
-
-  listProvince: any;
-  listKabupaten: any;
-  listKecamatan: any;
-  listKelurahan: any;
+  listProvince: any = [];
+  listKabupaten: any = [];
+  listKecamatan: any = [];
+  listKelurahan: any = [];
   showPassword: boolean;
   temp: any;
-  province: any;
-  kabupaten: any;
-  kecamatan: any;
-  kelurahan: any;
+  province: any = [];
+  kabupaten: any = [];
+  kecamatan: any = [];
+  kelurahan: any = [];
   idKelurahan: any;
+  gendernya: string;
   constructor(
     public alertCtrl: AlertController,
-    public loading: LoadingProvider,
-    public actionSheetCtrl: ActionSheetController,
     public toastCtrl: ToastController,
+    public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
+    public loading: LoadingProvider,
     public data: DataProvider,
-    public http: Http,
     public navCtrl: NavController,
     public navParams: NavParams
   ) {}
 
   ionViewDidLoad() {
-    this.token = localStorage.getItem("tokenPatriot");
-    this.getFamilyByPatriot();
-    this.getCurrentUser();
-    this.getlistProvince();
-    console.log("user profile", this.user);
-
-    this.statusAdd = false;
-    console.log("ionViewDidLoad ProfilePage");
-    this.data
-      .decodeToken(this.token)
-      .then(decoded => {
-        let sumReport: any;
-        sumReport = decoded;
-        this.sumReports = sumReport.token;
-        console.log("decode token : ", this.sumReports.laporanterkirim);
-      })
-      .catch(err => {});
-
-    // this.getDetailFamily();
+    this.getlistProvince()
   }
-  getCurrentUser() {
+  goSignUp() {
     this.loading.show();
+    console.log("clicked");
     this.data
-      .currentUser(this.token)
-      .then(user => {
-        this.dataUser = user;
-        console.log(this.dataUser);
-        if (this.dataUser.status == 200 || this.dataUser.status == true ) {
-          this.user = this.dataUser.json().data;
-          this.loading.hide();
-        } else {
-          localStorage.clear();
-          this.navCtrl.parent.parent.setRoot("LoginPage");
-          this.tokenExpiredToast();
-        }
+      .signUpUser(
+        this.email,
+        this.password,
+        this.nama,
+        this.gender,
+        this.kelurahan,
+        this.alamat,
+        this.foto
+      )
+      .then(response => {
+        this.loading.hide();
+        this.successToast();
+        this.navCtrl.pop();
+        console.log("response", response);
       })
       .catch(err => {
-        alert("Terjadi kesalahan, silahkan coba kembali");
-        console.log("terjadi error", err);
-        this.loading.hide();
-        this.failToast();
-        this.navCtrl.setRoot(TabsPage);
+        alert("Koneksi anda bermasalah");
       });
+  }
+  successToast() {
+    const toast = this.toastCtrl.create({
+      message: "Anda berhasil mendaftar sebagai patriot.",
+      duration: 3000
+    });
+    toast.present();
+  }
+  alertGender() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle("Pilih jenis kelamin");
+    alert.addInput({
+      type: "radio",
+      label: "Laki-laki",
+      value: "1",
+      checked: false
+    });
+    alert.addInput({
+      type: "radio",
+      label: "Perempuan",
+      value: "0",
+      checked: false
+    });
+    alert.addButton("Tutup");
+    alert.addButton({
+      text: "OK",
+      handler: gender => {
+        if (gender == 1) {
+          this.gendernya = "Laki-laki";
+        } else {
+          this.gendernya = "Perempuan";
+        }
+        this.gender = gender;
+      }
+    });
+    alert.present();
   }
   alertProvince() {
     let alert = this.alertCtrl.create();
     alert.setTitle("Pilih Provinsi");
-    let temp = this.listProvince;
+    let temp = this.listProvince.data;
     for (let i = 0; i < temp.length; i++) {
       alert.addInput({
         type: "radio",
@@ -123,77 +128,6 @@ export class ProfilePage {
         this.getlistKabupaten(Prov.id);
         this.province = Prov.name;
         console.log("namanya ", this.province);
-      }
-    });
-    alert.present();
-  }
-  alertKabupaten() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle("Pilih Kabupaten");
-    let temp: any = this.listKabupaten;
-    for (let i = 0; i < temp.length; i++) {
-      alert.addInput({
-        type: "radio",
-        label: this.listKabupaten[i].name,
-        value: this.listKabupaten[i],
-        checked: false
-      });
-    }
-
-    alert.addButton("Tutup");
-    alert.addButton({
-      text: "OK",
-      handler: kabupaten => {
-        this.getlistKecamatan(kabupaten.id);
-        this.kabupaten = kabupaten.name;
-        console.log("nama kecamatan yang dipilih ", this.kabupaten);
-      }
-    });
-    alert.present();
-  }
-  alertKecamatan() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle("Pilih Kecamatan");
-    let temp: any = this.listKecamatan;
-    for (let i = 0; i < temp.length; i++) {
-      alert.addInput({
-        type: "radio",
-        label: this.listKecamatan[i].name,
-        value: this.listKecamatan[i],
-        checked: false
-      });
-      console.log(this.listKecamatan[i].name);
-    }
-    alert.addButton("Tutup");
-    alert.addButton({
-      text: "OK",
-      handler: kecamatan => {
-        this.getlistKelurahan(kecamatan.id);
-        this.kecamatan = kecamatan.name;
-        console.log("nama kecamatan yang dipilih ", this.kecamatan);
-      }
-    });
-    alert.present();
-  }
-  alertKelurahan() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle("Pilih Kelurahan");
-    let temp: any = this.listKelurahan;
-    for (let i = 0; i < temp.length; i++) {
-      alert.addInput({
-        type: "radio",
-        label: this.listKelurahan[i].name,
-        value: this.listKelurahan[i],
-        checked: false
-      });
-    }
-    alert.addButton("Tutup");
-    alert.addButton({
-      text: "OK",
-      handler: kelurahan => {
-        this.idKelurahan = kelurahan.id;
-        this.kelurahan = kelurahan.name;
-        console.log("kelurahan yang diplih", this.kelurahan);
       }
     });
     alert.present();
@@ -218,6 +152,74 @@ export class ProfilePage {
         alert("Koneksi anda bermasalah");
       });
   }
+  alertKabupaten() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle("Pilih Kabupaten");
+    for (let i = 0; i < this.listKabupaten.length; i++) {
+      alert.addInput({
+        type: "radio",
+        label: this.listKabupaten[i].name,
+        value: this.listKabupaten[i],
+        checked: false
+      });
+    }
+
+    alert.addButton("Tutup");
+    alert.addButton({
+      text: "OK",
+      handler: kabupaten => {
+        this.getlistKecamatan(kabupaten.id);
+        this.kabupaten = kabupaten.name;
+        console.log("nama kecamatan yang dipilih ", this.kabupaten);
+      }
+    });
+    alert.present();
+  }
+  alertKecamatan() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle("Pilih Kecamatan");
+    for (let i = 0; i < this.listKecamatan.length; i++) {
+      alert.addInput({
+        type: "radio",
+        label: this.listKecamatan[i].name,
+        value: this.listKecamatan[i],
+        checked: false
+      });
+      console.log(this.listKecamatan[i].name);
+    }
+    alert.addButton("Tutup");
+    alert.addButton({
+      text: "OK",
+      handler: kecamatan => {
+        this.getlistKelurahan(kecamatan.id);
+        this.kecamatan = kecamatan.name;
+        console.log("nama kecamatan yang dipilih ", this.kecamatan);
+      }
+    });
+    alert.present();
+  }
+  alertKelurahan() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle("Pilih Kelurahan");
+    for (let i = 0; i < this.listKelurahan.length; i++) {
+      alert.addInput({
+        type: "radio",
+        label: this.listKelurahan[i].name,
+        value: this.listKelurahan[i],
+        checked: false
+      });
+    }
+    alert.addButton("Tutup");
+    alert.addButton({
+      text: "OK",
+      handler: kelurahan => {
+        this.idKelurahan = kelurahan.id;
+        this.kelurahan = kelurahan.name;
+        console.log("kelurahan yang diplih", this.kelurahan);
+      }
+    });
+    alert.present();
+  }
   getlistKabupaten(idProvince) {
     this.loading.show();
     this.data
@@ -226,7 +228,7 @@ export class ProfilePage {
         this.temp = kabupaten;
         if ((this.temp.status = 200)) {
           this.listKabupaten = this.temp.json().data;
-          console.log("kabupaten", this.listKabupaten);
+          console.log("kabupate", this.listKabupaten);
           this.loading.hide();
         } else {
           console.log("gagal get kabupaten");
@@ -240,7 +242,6 @@ export class ProfilePage {
   }
   getlistKecamatan(idKabupaten) {
     this.loading.show();
-
     this.data
       .getKecamatan(idKabupaten)
       .then(kecamatan => {
@@ -280,68 +281,6 @@ export class ProfilePage {
         alert("Koneksi anda bermasalah");
       });
   }
-  edit() {
-    console.log("ionViewDidLoad ProfilePage");
-  }
-  addNewFamily() {
-    this.loading.show();
-    this.data
-      .addFamily(this.token, this.kepalaKeluarga, this.alamat, this.foto)
-      .then(response => {
-        console.log("new family uploaded", response);
-        this.addFamilyToast();
-        this.navCtrl.setRoot("TabsPage");
-        this.statusAdd = false;
-        this.loading.hide();
-      })
-      .catch(err => {
-        this.failFamilyToast();
-        console.log("upload family error", err);
-        this.statusAdd = false;
-        this.loading.hide();
-      });
-  }
-  getFamilyByPatriot() {
-    this.loading.show();
-    let temp = [];
-    this.data
-      .familyByPatriot(this.token)
-      .then(family => {
-        this.dataFamily = family;
-        console.log("data family", this.dataFamily);
-        if ((this.dataFamily.status = 200)) {
-          this.family = this.dataFamily.json().data;
-          console.log("family", this.family);
-          for (var i = 0; i < this.family.length; i++) {
-            temp[i] = this.family[i].rgn_subdistrict;
-          }
-          this.rgn_subdistrict = temp;
-          this.loading.hide();
-        } else {
-          console.log("gagal get api family by patriot");
-          this.loading.hide();
-        }
-      })
-      .catch(err => {
-        alert("terjadi kesalahan, silahkan coba kembali");
-        console.log("error get family by patriot", err);
-      });
-  }
-  // getDetailFamily() {
-  //   let idsementara = 14;
-  //   this.data.detailFamily(idsementara, this.token).then(detailFamily => {
-  //     this.dataDetail = detailFamily;
-  //     this.detail = this.dataDetail.data;
-  //     console.log("detail family", this.dataDetail);
-  //   });
-  // }
-  statusAddFamily() {
-    this.statusAdd = true;
-  }
-  close() {
-    this.statusAdd = false;
-  }
-
   uploadPicture() {
     console.log("clicked");
     let actionSheet = this.actionSheetCtrl.create({
@@ -402,46 +341,5 @@ export class ProfilePage {
         },
         err => {}
       );
-  }
-  logout() {
-    this.loading.show();
-    localStorage.removeItem("tokenPatriot");
-    this.navCtrl.parent.parent.setRoot("LoginPage");
-    this.loading.hide();
-  }
-  addFamilyToast() {
-    const toast = this.toastCtrl.create({
-      message: "Berhasil menambahkan keluarga baru",
-      duration: 3000
-    });
-    toast.present();
-  }
-  failFamilyToast() {
-    const toast = this.toastCtrl.create({
-      message: "Gagal menambahkan keluarga baru",
-      duration: 3000
-    });
-    toast.present();
-  }
-  logoutToast() {
-    const toast = this.toastCtrl.create({
-      message: "Berhasil keluar",
-      duration: 3000
-    });
-    toast.present();
-  }
-  failToast() {
-    const toast = this.toastCtrl.create({
-      message: "Gagal meminta data",
-      duration: 3000
-    });
-    toast.present();
-  }
-  tokenExpiredToast() {
-    const toast = this.toastCtrl.create({
-      message: "Token kadaluarsa, silahkan login kembali",
-      duration: 3000
-    });
-    toast.present();
   }
 }

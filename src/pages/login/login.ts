@@ -1,7 +1,14 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
 import { DataProvider } from "../../providers/data/data";
 import { TabsPage } from "../tabs/tabs";
+import { SignupPage } from "../signup/signup";
+import { LoadingProvider } from "../../providers/loading";
 
 @IonicPage()
 @Component({
@@ -9,61 +16,60 @@ import { TabsPage } from "../tabs/tabs";
   templateUrl: "login.html"
 })
 export class LoginPage {
-  email:any;
-  password:any;
-  nama:any;
-  gender:any;
-  fk_desaid:any;
-  alamat:any;
-  foto:any;
-  constructor(  
+  email: any;
+  password: any;
+  statusRegister: any = false;
+  showPassword: boolean;
+  constructor(
+    public loading: LoadingProvider,
+    public toastCtrl: ToastController,
     public data: DataProvider,
     public navCtrl: NavController,
     public navParams: NavParams
   ) {}
   protected user: any;
-  protected token: any;
+  public token: any;
   ionViewDidLoad() {
     console.log("ionViewDidLoad LoginPage");
-    if(localStorage.getItem('tokenPatriot')) {
-     this.navCtrl.setRoot(TabsPage);
+    if (
+      !localStorage.getItem("tokenPatriot") ||
+      localStorage.getItem("tokenPatriot") == "undefined"
+    ) {
+      
+    } else {
+      this.navCtrl.setRoot("TabsPage");
     }
-    console.log("new token",localStorage.getItem('status'));
+    // console.log("new token",localStorage.getItem('status'));
   }
   // Login user from DataProvider
   signIn() {
-    this.data
-      .signIn(this.email, this.password)
-      .then(user => {
-        this.user = user;
-        console.log("user", this.user);
+    this.data.signIn(this.email, this.password).then(user => {
+      this.user = user;
+      this.navCtrl.setRoot("TabsPage");
+      console.log(this.user);
+    }).catch(err => {
+      alert("terjadi kesalahan, silahkan coba kembali");
+      console.log("errpor signin method", err);
 
-        // save token to localstorage
-        localStorage.setItem("tokenPatriot", this.user.token);
-      })
-      .then(success => {
-        this.navCtrl.setRoot(TabsPage);
-      })
-      .catch(err => {
-        console.log("error", err);
-      });
+    });
+  }
+  unRegistToast() {
+    const toast = this.toastCtrl.create({
+      message: "Email belum terdaftar",
+      duration: 3000
+    });
+    toast.present();
+  }
+  failToast() {
+    const toast = this.toastCtrl.create({
+      message: "Email/password salah. Pastikan email dan password benar.",
+      duration: 3000
+    });
+    toast.present();
   }
   // Register user from DataProvider
   signUp() {
-    console.log("clicked");
-
-    this.data
-      .signUpUser(
-        this.email,
-        this.password,
-        this.nama,
-        this.gender,
-        this.fk_desaid,
-        this.alamat,
-        this.foto
-      )
-      .then(response => {
-        console.log("response", response);
-      });
+    // this.navCtrl.push(KirimOperasiPasarPage);
+    this.navCtrl.push("SignupPage");
   }
 }

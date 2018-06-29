@@ -2,9 +2,9 @@
   <div class="header">
     <h3 class="tab-profile">Artikel</h3>
   </div>
-  <div *ngIf="articles == null">
-    <h3>Tidak ada artikel</h3>
-  </div>
+  <!-- <div *ngFor="let article of articles;let i = index"> -->
+    <h3 *ngIf="articles == 0">Tidak ada artikel tersedia.</h3>
+  <!-- </div> -->
   <div *ngIf="articles != null">
 
     <div class="card" *ngFor="let article of articles;let i = index">

@@ -1,21 +1,16 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav, App, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../pages/tabs/tabs';
-import { ArticleDetailPage } from '../pages/article-detail/article-detail';
-import { ProfilePage } from '../pages/profile/profile';
-import { ReportPage } from '../pages/report/report';
-import { FormulirPage } from '../pages/formulir/formulir';
 import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
-  // rootPage:any = TabsPage;
-  rootPage:any = LoginPage;
+export class MyApp {  
+  @ViewChild('myNav') navChild:Nav;  
+  rootPage:any = 'LoginPage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -25,4 +20,5 @@ export class MyApp {
       splashScreen.hide();
     });
   }
+
 }

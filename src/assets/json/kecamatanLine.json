@@ -1,0 +1,70 @@
+{
+  "kecamatan": "Dramaga",
+  "color": [
+    {
+      "id": 0,
+      "bulan": "Januari",
+      "statusRawan": 2
+    },
+    {
+      "id": 1,
+      "bulan": "Februari",
+      "statusRawan": 5
+    },
+    {
+      "id": 2,
+      "bulan": "Maret",
+      "statusRawan": 2
+    },
+    {
+      "id": 3,
+      "bulan": "April",
+      "statusRawan": 1
+    },
+    {
+      "id": 4,
+      "bulan": "Maret",
+      "statusRawan": 4
+    },
+    {
+      "id": 5,
+      "bulan": "Mei",
+      "statusRawan": 2
+    },
+    {
+      "id": 6,
+      "bulan": "Juni",
+      "statusRawan": 5
+    },
+    {
+      "id": 7,
+      "bulan": "Juli",
+      "statusRawan": 2
+    },
+    {
+      "id": 8,
+      "bulan": "Agustus",
+      "statusRawan": 3
+    },
+    {
+      "id": 9,
+      "bulan": "September",
+      "statusRawan": 1
+    },
+    {
+      "id": 10,
+      "bulan": "Oktober",
+      "statusRawan": 5
+    },
+    {
+      "id": 11,
+      "bulan": "November",
+      "statusRawan": 3
+    },
+    {
+      "id": 12,
+      "bulan": "Desember",
+      "statusRawan": 4
+    }
+  ]
+}
