@@ -37,9 +37,9 @@ export class ProfilePage {
   sumReports: any;
 
   listProvince: any;
-  listKabupaten: any;
-  listKecamatan: any;
-  listKelurahan: any;
+  listKabupaten: any = [];
+  listKecamatan: any = [];
+  listKelurahan: any = [];
   showPassword: boolean;
   temp: any;
   province: any;

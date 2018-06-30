@@ -19,6 +19,7 @@ export class HomePage {
   @ViewChild("pieCanvas") pieCanvas;
   // @ViewChild("barCanvas") barCanvas;
 
+  private dataSummary: any;
   map: any;
   pieChart: any;
   lineChart: any;
@@ -26,27 +27,45 @@ export class HomePage {
   token: any;
   dataUser: any;
   user: any;
+
   constructor(
     public loadingProvider: LoadingProvider,
     public data: DataProvider,
     public http: Http,
     public navCtrl: NavController,
     public toastCtrl: ToastController
-  ) {}
-  ionViewDidLoad() {
-    // welcome
+  ) {
     this.token = localStorage.getItem("tokenPatriot");
-    this.getDataKecamatanByMonth();
-    setTimeout(() => {
-      this.displayGoogleMap();
-      this.getMarkers();
-    }, 200);
+  }
+  ionViewDidLoad() {
+    this.getDataSummary()
+    .then((data)=>{
+      this.dataSummary = data;
+      setTimeout(() => {
+        this.displayGoogleMap();
+        this.addMarkersToMap(this.dataSummary.listkecamatan);
+      }, 200);
+
+      //add chart
+      this.pieChart = this.getPieChart(this.dataSummary);
+    })
   }
   ionViewDidEnter() {
     this.getCurrentUser();
-    this.pieChart = this.getPieChart();
-    // this.barChart = this.getBarChart();
-    this.lineChart = this.getLineChart();
+  }
+  getDataSummary(){
+    return new Promise((resolve, reject)=>{
+      let url = this.data.BASE_URL+'summary/getkondisirawanbylokasi';
+      this.data.get(url, this.token)
+      .subscribe(dataResponse =>{
+        let data: any = dataResponse;
+        console.log('Berhasil get data summary anjay', data.data);
+        resolve(data.data)
+      }, err =>{
+        alert(err)
+      })
+    })
+
   }
   failToast() {
     const toast = this.toastCtrl.create({
@@ -98,95 +117,55 @@ export class HomePage {
       type: chartType
     });
   }
-  getPieChart() {
-    let a = 10,
-      b = 20,
-      c = 30,
-      d = 40,
-      e = 50;
+  getPieChart(summary) {
+    console.log('data piechart ', summary);
+
+    let a = summary.kondisi[1],
+      b = summary.kondisi[2],
+      c = summary.kondisi[3],
+      d = summary.kondisi[4],
+      e = summary.kondisi[5],
+      f = summary.totalkecamatan - (a+b+c+d+e) //rawan total
+    
+    let color = this.data.COLOR_RAWAN.map(rawan =>{
+      return rawan.color
+    })
+    console.log('data f '+ f + 'data color 2 '+color[2])
     let data = {
       labels: [
-        "Rawan Pangan 1 : " + a + "%",
-        "Rawan Pangan 2 : " + b + "%",
-        "Rawan Pangan 3 : " + c + "%",
-        "Rawan Pangan 4 : " + d + "%",
-        "Rawan Pangan 5 : " + e + "%"
+        "Aman    : " + Math.round(f/summary.totalkecamatan*100).toFixed(2) + "%",
+        "Rawan 1 : " + Math.round(a/summary.totalkecamatan*100).toFixed(2) + "%",
+        "Rawan 2 : " + Math.round(b/summary.totalkecamatan*100).toFixed(2) + "%",
+        "Rawan 3 : " + Math.round(c/summary.totalkecamatan*100).toFixed(2) + "%",
+        "Rawan 4 : " + Math.round(d/summary.totalkecamatan*100).toFixed(2) + "%",
+        "Rawan 5 : " + Math.round(e/summary.totalkecamatan*100).toFixed(2) + "%"
       ],
       datasets: [
         {
-          data: [a, b, c, d, e],
+          data: [f, a, b, c, d, e],
           backgroundColor: [
-            "green",
-            "greenyellow",
-            "yellow",
-            "red",
-            "maroon"
-            // pattern.draw('hijautua', '#00aa00'),
-            // pattern.draw('hijau', '#00ff00'),
-            // pattern.draw('kuning', '#ffff00'),
-            // pattern.draw('merah', '#ff0000'),
-            // pattern.draw('merahtua', '#aa0000'),
+            '#'+color[0],
+            '#'+color[1],
+            '#'+color[2],
+            '#'+color[3],
+            '#'+color[4],
+            '#'+color[5]
           ],
           hoverBackgroundColor: [
-            "green",
-            "greenyellow",
-            "yellow",
-            "red",
-            "maroon"
-            // pattern.draw('hijautua', '#00aa00'),
-            // pattern.draw('hijau', '#00ff00'),
-            // pattern.draw('kuning', '#ffff00'),
-            // pattern.draw('merah', '#ff0000'),
-            // pattern.draw('merahtua', '#aa0000'),
+            '#'+color[0],
+            '#'+color[1],
+            '#'+color[2],
+            '#'+color[3],
+            '#'+color[4],
+            '#'+color[5]
           ]
         }
       ]
     };
-
+    
     return this.getChart(this.pieCanvas.nativeElement, "pie", data);
   }
-  // getBarChart() {
-  //   const data = {
-  //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  //     datasets: [
-  //       {
-  //         label: "Pergerakan setahun",
-  //         data: [12, 19, 3, 5, 2, 3],
-  //         backgroundColor: [
-  //           "rgba(255, 99, 132, 0.2)",
-  //           "rgba(54, 162, 235, 0.2)",
-  //           "rgba(255, 206, 86, 0.2)",
-  //           "rgba(75, 192, 192, 0.2)",
-  //           "rgba(153, 102, 255, 0.2)",
-  //           "rgba(255, 159, 64, 0.2)"
-  //         ],
-  //         borderColor: [
-  //           "rgba(255,99,132,1)",
-  //           "rgba(54, 162, 235, 1)",
-  //           "rgba(255, 206, 86, 1)",
-  //           "rgba(75, 192, 192, 1)",
-  //           "rgba(153, 102, 255, 1)",
-  //           "rgba(255, 159, 64, 1)"
-  //         ],
-  //         borderWidth: 1
-  //       }
-  //     ]
-  //   };
 
-  //   const options = {
-  //     scales: {
-  //       yAxes: [
-  //         {
-  //           ticks: {
-  //             beginAtZero: true
-  //           }
-  //         }
-  //       ]
-  //     }
-  //   };
-
-  //   return this.getChart(this.barCanvas.nativeElement, "bar", data, options);
-  // }
   getDataKecamatanByMonth() {
     this.http.get("assets/json/kecamatanLine.json").subscribe(data => {
       console.log("taraf rawan kecamatan perbulan", data.json());
@@ -329,18 +308,19 @@ export class HomePage {
     return this.getChart(this.lineCanvas.nativeElement, "line", data);
   }
   displayGoogleMap() {
-    let coordinateDramaga = { lat: -6.578127, lng: 106.731268 };
+    console.log('lat ', this.dataSummary.kabupaten.lat)
+    let coordinateDramaga = { lat: this.dataSummary.kabupaten.lat, lng: this.dataSummary.kabupaten.lng };
 
     let mapOptions = {
       center: coordinateDramaga,
-      zoom: 12,
+      zoom: 8,
       mapTypeId: google.maps.MapTypeId.terrain
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
     var marker = new google.maps.Marker({
       position: coordinateDramaga,
       map: this.map,
-      label: "Kecamatan Dramaga"
+      label: this.dataSummary.kabupaten.nama
     });
     // keterangan
     var contentString = "Dramaga adalah daerah macet phew phew~";
@@ -352,42 +332,43 @@ export class HomePage {
     });
   }
   getMarkers() {
-    this.http
-      .get("assets/json/marker.json")
-      .map(res => res.json())
-      .subscribe(data => {
-        // console.log("data", data);
-        this.addMarkersToMap(data);
-      }), err => {
-        alert("get marker error");
-      };
+    let url = this.data.BASE_URL+'summary/getkondisirawanbylokasi';
+    this.data.get(url, this.token)
+    .subscribe( dataResponse =>{
+      let data: any = dataResponse;
+      console.log('Berhasil get data summary ', data.data);
+      //data summary
+      this.dataSummary = data.data;
+      //draw marker 
+      this.addMarkersToMap(this.dataSummary.listkecamatan);
+    }, err =>{
+      alert(JSON.stringify(err))
+    })
   }
 
-  addMarkersToMap(markers) {
+  addMarkersToMap(markers) {// markers means list region that will be marked
     for (let marker of markers) {
-      // console.log("marks", marker);
+
+      //find the tipe rawan
+      var tipeRawan = this.data.COLOR_RAWAN.filter( rawan => {
+        return rawan.id == marker.kondisi; // return arr of object by condition
+      })
+
       var iconNew = {
         url:
-          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" +
-          marker.color // url
-        // scaledSize: new google.maps.Size(20, 20), // scaled size
-        // origin: new google.maps.Point(0, 0), // origin
-        // anchor: new google.maps.Point(0, 10) // anchor
+          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+tipeRawan[0].color,// url        labelOrigin: new google.maps.Point(14, 45)
       };
-      var position = new google.maps.LatLng(marker.latitude, marker.longitude);
+      var position = new google.maps.LatLng(marker.lat, marker.lng);
+      // plot marker
       var dogwalkMarker = new google.maps.Marker({
         position: position,
         label: marker.name,
         icon: iconNew,
         animation: google.maps.Animation.DROP
       });
-      // hijauTua hijau kuning merah merahTua
-      // 00aa00 adff2f ffff00 ff0000 b03060
-      if (marker.color == "b03060" || marker.color == "ff0000") {
-        dogwalkMarker.addListener(
-          "click",
-          dogwalkMarker.setAnimation(google.maps.Animation.BOUNCE)
-        );
+
+      if (tipeRawan[0].color == "b03060" || tipeRawan[0].color == "ff0000") { // set the marker of rawan4&5 to bounce
+        dogwalkMarker.setAnimation(google.maps.Animation.BOUNCE)
       }
 
       // infowindows
@@ -412,5 +393,16 @@ export class HomePage {
       // });
       // flightPath.setMap(this.map);
     }
+  }
+
+  /**
+   * page function
+   */
+  coba(){
+    let url = this.data.BASE_URL+'keluargamiskin/getdetailkeluargamiskin/5';
+    this.data.get(url, this.token)
+    .subscribe(data =>{
+      console.log('berhasil get detail keluarga miskin ', data);
+    })
   }
 }
