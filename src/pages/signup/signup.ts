@@ -112,7 +112,7 @@ export class SignupPage {
   alertProvince() {
     let alert = this.alertCtrl.create();
     alert.setTitle("Pilih Provinsi");
-    let temp = this.listProvince.data;
+    let temp = this.listProvince;
     for (let i = 0; i < temp.length; i++) {
       alert.addInput({
         type: "radio",

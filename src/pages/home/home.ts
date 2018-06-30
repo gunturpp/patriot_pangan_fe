@@ -71,6 +71,13 @@ export class HomePage {
         console.log("data user",this.dataUser);
         if (this.dataUser.status == 200 || this.dataUser.status == true) {
           this.loadingProvider.hide();
+          console.log("dayday",this.dataUser.json().status);
+          
+          if(this.dataUser.json().status == false) {
+            localStorage.clear();
+            this.navCtrl.parent.parent.setRoot("LoginPage");
+            this.tokenExpiredToast();  
+          }
         } else {
           localStorage.clear();
           this.navCtrl.parent.parent.setRoot("LoginPage");
