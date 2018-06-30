@@ -74,7 +74,7 @@ export class ProfilePage {
         let sumReport: any;
         sumReport = decoded;
         this.sumReports = sumReport.token;
-        console.log("decode token : ", this.sumReports.laporanterkirim);
+        console.log("decode token : ", sumReport);
       })
       .catch(err => {});
 

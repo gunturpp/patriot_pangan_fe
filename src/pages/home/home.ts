@@ -4,8 +4,8 @@ import { Chart } from "chart.js";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { LoadingProvider } from "../../providers/loading";
-
 import "rxjs/add/operator/map";
+// for google maps variable
 declare var google: any;
 
 @IonicPage()
@@ -19,6 +19,7 @@ export class HomePage {
   @ViewChild("pieCanvas") pieCanvas;
   // @ViewChild("barCanvas") barCanvas;
 
+  // global variable
   private dataSummary: any;
   map: any;
   pieChart: any;
@@ -27,6 +28,7 @@ export class HomePage {
   token: any;
   dataUser: any;
   user: any;
+  dataLineChart: any;
 
   constructor(
     public loadingProvider: LoadingProvider,
@@ -35,12 +37,15 @@ export class HomePage {
     public navCtrl: NavController,
     public toastCtrl: ToastController
   ) {
+    // get token from local storage
     this.token = localStorage.getItem("tokenPatriot");
   }
   ionViewDidLoad() {
+    this.getDataKecamatanByMonth();
     this.getDataSummary()
     .then((data)=>{
       this.dataSummary = data;
+      console.log("data di gomaps", this.dataSummary);
       setTimeout(() => {
         this.displayGoogleMap();
         this.addMarkersToMap(this.dataSummary.listkecamatan);
@@ -59,13 +64,17 @@ export class HomePage {
       this.data.get(url, this.token)
       .subscribe(dataResponse =>{
         let data: any = dataResponse;
-        console.log('Berhasil get data summary anjay', data.data);
-        resolve(data.data)
+        console.log("dataSummary", data);
+        if(data.status == false) {
+          console.log("Gagal mendapatkan data wilayah");
+        } else {
+          console.log('Berhasil get data summary anjay', data.data);
+          resolve(data.data)
+        }
       }, err =>{
         alert(err)
       })
     })
-
   }
   failToast() {
     const toast = this.toastCtrl.create({
@@ -168,6 +177,7 @@ export class HomePage {
 
   getDataKecamatanByMonth() {
     this.http.get("assets/json/kecamatanLine.json").subscribe(data => {
+      this.dataLineChart = data;
       console.log("taraf rawan kecamatan perbulan", data.json());
     });
   }

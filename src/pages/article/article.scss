@@ -45,10 +45,12 @@ page-article {
     h1.title {
       text-align: left !important;
       padding: 10px;
+      display: block;
     }
     .content {
       text-align: justify;
       padding: 10px;
+      display: block;
     }
     .readmore {
       text-align: right;

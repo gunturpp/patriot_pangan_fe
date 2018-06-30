@@ -26,6 +26,8 @@ import { DataProvider } from '../providers/data/data';
 import { LoadingProvider } from '../providers/loading';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { SignupPage } from '../pages/signup/signup';
+import { AlertProvider } from '../providers/alert/alert';
+import { ToastProvider } from '../providers/toast/toast';
 
 //set the auth http for API
 export function getAuthHttp(http, Storage) {
@@ -88,7 +90,9 @@ export function getAuthHttp(http, Storage) {
       provide: AuthHttp,
       useFactory: getAuthHttp,
       deps: [Http, Storage]
-    }
+    },
+    AlertProvider,
+    ToastProvider
   ]
 })
 export class AppModule {}

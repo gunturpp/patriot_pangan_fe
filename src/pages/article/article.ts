@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
-import { ArticleDetailPage } from "../article-detail/article-detail";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { LoadingProvider } from "../../providers/loading";
@@ -11,6 +10,7 @@ import { LoadingProvider } from "../../providers/loading";
   templateUrl: "article.html"
 })
 export class ArticlePage {
+  // global variable
   token: any;
   articles: any;
   penulis = [];
@@ -21,17 +21,21 @@ export class ArticlePage {
     public http: Http,
     public navCtrl: NavController,
     public navParams: NavParams
-  ) {}
+  ) {
+    // get token from local storage
+    this.token = localStorage.getItem("tokenPatriot");
+  }
 
   ionViewDidEnter() {
-    this.token = localStorage.getItem("tokenPatriot");
+    // get new data article each page click
     this.getArticle();
-
     console.log("ionViewDidLoad ArticlePage");
   }
+  // go to detail page
   readmore(detail) {
     this.navCtrl.push('ArticleDetailPage', { detail: detail });
   }
+  // get article from rest api
   getArticle() {
     this.loadingProvider.show();
     this.data
