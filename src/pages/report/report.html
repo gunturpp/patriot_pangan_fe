@@ -12,7 +12,7 @@
     </div>
     <div class="scrolling">
       <div class="card" *ngFor="let fam of family;let i = index">
-        <div disabled class="sudahlapor" *ngIf="fam.bulanterakhirmelaporkan >= month">
+        <div (click)="returnId(null)" disabled class="sudahlapor" *ngIf="fam.bulanterakhirmelaporkan >= month">
           <img class="avatar-family" src="https://patriotpangan.com/nodejs/public/images/keluargaMiskins/{{fam.pathfoto}}">
           <p class="family"><b>Keluarga {{fam.namakeluarga}}</b> <ion-icon class="sudahlapor-check" name="md-checkmark"></ion-icon>
             <br>
@@ -48,7 +48,7 @@
   <div style="text-align: center">
     <br>
     <br>
-    <button *ngIf="!idFamily" disabled class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
+    <button *ngIf="!idFamily || idFamily == null" disabled class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
     <button *ngIf="idFamily" class="btn-report" ion-button (click)="createReport()">Buat Laporan</button>
   </div>
 </ion-content>
