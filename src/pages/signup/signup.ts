@@ -59,7 +59,7 @@ export class SignupPage {
         this.password,
         this.nama,
         this.gender,
-        this.kelurahan,
+        this.idKelurahan,
         this.alamat,
         this.foto
       )
