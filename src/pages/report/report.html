@@ -6,16 +6,15 @@
     <p *ngIf="user" class="report-ket1">Hari yang baik untuk melapor, {{user.nama}}</p>
     <span class="report-ket2">Batas waktu melapormu untuk bulan ini adalah
       <span style="font-weight: bold">{{dayLeft}} hari lagi</span>. Lebih cepat lebih baik, ayo lapor sekarang!</span>
-    <h6>Keluarga yang dipantau</h6>
-    <span>(pilih keluarga untuk dilaporkan)</span>
+    <h6>Pilih keluarga yang dipantau</h6>
     <div *ngIf="family == null">
       <h3>Tidak ada keluarga yang dipantau</h3>
     </div>
     <div class="scrolling">
-      <div (click)="returnId(fam.id)" class="card" *ngFor="let fam of family;let i = index">
+      <div class="card" *ngFor="let fam of family;let i = index">
         <div disabled class="sudahlapor" *ngIf="fam.bulanterakhirmelaporkan >= month">
           <img class="avatar-family" src="https://patriotpangan.com/nodejs/public/images/keluargaMiskins/{{fam.pathfoto}}">
-          <p class="family">Keluarga {{fam.namakeluarga}}
+          <p class="family"><b>Keluarga {{fam.namakeluarga}}</b> <ion-icon class="sudahlapor-check" name="md-checkmark"></ion-icon>
             <br>
             <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[i].name}}</span>
             <br> Kondisi pangan saat ini:
@@ -25,12 +24,12 @@
             <span *ngIf="fam.status == 2" style="color:#adff2f">Rawan Pangan {{fam.status}}</span>
             <span *ngIf="fam.status == 3" style="color:#ffff00">Rawan Pangan {{fam.status}}</span>
             <span *ngIf="fam.status == 4" style="color:#ff0000">Rawan Pangan {{fam.status}}</span>
-            <span *ngIf="fam.status == 4" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
+            <span *ngIf="fam.status == 5" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
           </p>
         </div>
-        <div *ngIf="fam.bulanterakhirmelaporkan < month">
+        <div (click)="returnId(fam.id)" *ngIf="fam.bulanterakhirmelaporkan < month">
             <img class="avatar-family" src="https://patriotpangan.com/nodejs/public/images/keluargaMiskins/{{fam.pathfoto}}">
-          <p class="family">Keluarga {{fam.namakeluarga}}
+          <p class="family"><b>Keluarga {{fam.namakeluarga}}</b>
             <br>
             <span *ngIf="rgn_subdistrict">{{rgn_subdistrict[i].name}}</span>
             <br> Kondisi pangan saat ini:

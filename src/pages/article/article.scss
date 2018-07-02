@@ -20,7 +20,7 @@ page-article {
     span.head {
       font-size: 8px;
     }
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #fff;
     padding: 10px;
     .border {
@@ -44,8 +44,10 @@ page-article {
     }
     h1.title {
       text-align: left !important;
-      padding: 10px;
+      max-height: 150px;
+      padding-top: 30px;
       display: block;
+      z-index: 10;
     }
     .content {
       text-align: justify;

@@ -31,10 +31,13 @@ export class ArticlePage {
     this.token = localStorage.getItem("tokenPatriot");
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
     // get new data article each page click
     this.getArticle();
     console.log("ionViewDidLoad ArticlePage");
+  }
+  ionViewDidEnter() {
+    this.ionViewDidLoad();
   }
   // go to detail page
   readmore(detail) {

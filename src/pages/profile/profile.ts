@@ -46,6 +46,7 @@ export class ProfilePage {
   kabupaten: any;
   kecamatan: any;
   kelurahan: any;
+  kelurahanPatriot: any;
   idKelurahan: any;
   constructor(
     public alertCtrl: AlertController,
@@ -80,6 +81,9 @@ export class ProfilePage {
 
     // this.getDetailFamily();
   }
+  ionViewDidEnter() {
+    this.ionViewDidLoad();
+  }
   getCurrentUser() {
     this.loading.show();
     this.data
@@ -87,7 +91,7 @@ export class ProfilePage {
       .then(user => {
         this.dataUser = user;
         console.log(this.dataUser);
-        if (this.dataUser.status == 200 || this.dataUser.status == true ) {
+        if (this.dataUser.status == 200 || this.dataUser.status == true) {
           this.user = this.dataUser.json().data;
           this.loading.hide();
         } else {
@@ -403,11 +407,32 @@ export class ProfilePage {
         err => {}
       );
   }
+
+  alertLogout() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle("Yakin ingin keluar?");
+    alert.addButton("Tutup");
+    alert.addButton({
+      text: "OK",
+      handler: ok => {
+        this.logout();
+      }
+    });
+    alert.present();
+  }
   logout() {
     this.loading.show();
     localStorage.removeItem("tokenPatriot");
     this.navCtrl.parent.parent.setRoot("LoginPage");
+    this.logoutToast();
     this.loading.hide();
+  }
+  logoutToast() {
+    const toast = this.toastCtrl.create({
+      message: "Berhasil keluar",
+      duration: 3000
+    });
+    toast.present();
   }
   addFamilyToast() {
     const toast = this.toastCtrl.create({
@@ -419,13 +444,6 @@ export class ProfilePage {
   failFamilyToast() {
     const toast = this.toastCtrl.create({
       message: "Gagal menambahkan keluarga baru",
-      duration: 3000
-    });
-    toast.present();
-  }
-  logoutToast() {
-    const toast = this.toastCtrl.create({
-      message: "Berhasil keluar",
       duration: 3000
     });
     toast.present();

@@ -141,10 +141,9 @@ export class DataProvider {
           type: 1
         })
         .subscribe(data => {
-          console.log("data balikan login", data);
           if (data.status == 200 && data.json().status) {
             console.log("masuk njay");
-            localStorage.setItem("tokenPatriot", data.json().token);
+              localStorage.setItem("tokenPatriot", data.json().token);
             console.log("sukses", data);
             const toast = this.toastCtrl.create({
               message: "Selamat datang patriot!",
@@ -327,7 +326,6 @@ export class DataProvider {
       this.authHttp.get(this.apiGetProfile, options).subscribe(data => {
         resolve(data);
         console.log("profilekuuh", data);
-        localStorage.setItem("currentPatriot", JSON.stringify(data));
       }),
         err => {
           alert("Terjadi kesalahan, silahkan coba kembali");

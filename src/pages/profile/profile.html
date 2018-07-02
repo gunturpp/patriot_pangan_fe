@@ -72,12 +72,12 @@
     <img class="avatar" src="http://patriotpangan.com/nodejs{{user.pathfoto}}">
     <p class="name">{{user.nama}}
       <br>
-      <span class="address">{{user.alamat}}, Bogor</span>
+      <span class="address">{{user.alamat}}</span>
     </p>
     <div class="border"></div>
     <ion-row>
       <ion-col>
-        <span class="report reportSize">{{sumReports.laporanterkirim}}</span>
+        <span class="report reportSize">{{user.laporanterkirim}}</span>
         <div class="keterangan">Laporan terkirim</div>
         <div class="border"></div>
       </ion-col>
@@ -104,7 +104,7 @@
           <span *ngIf="fam.status == 2" style="color:#adff2f">Rawan Pangan {{fam.status}}</span>
           <span *ngIf="fam.status == 3" style="color:#ffff00">Rawan Pangan {{fam.status}}</span>
           <span *ngIf="fam.status == 4" style="color:#ff0000">Rawan Pangan {{fam.status}}</span>
-          <span *ngIf="fam.status == 4" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
+          <span *ngIf="fam.status == 5" style="color:#b03060">Rawan Pangan {{fam.status}}</span>
         </p>
       </div>
     </div>
@@ -152,7 +152,7 @@
     </ion-row>
 
     <div>
-      <button (click)="logout()" class="logout" ion-button>LOGOUT</button>
+      <button (click)="alertLogout()" class="logout" ion-button>LOGOUT</button>
     </div>
   </div>
 </ion-content>

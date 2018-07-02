@@ -28,7 +28,7 @@ export class LoginPage {
     public navParams: NavParams
   ) {}
   ionViewDidLoad() {
-    console.log("ionViewDidLoad LoginPage");
+    
     if (
       !localStorage.getItem("tokenPatriot") ||
       localStorage.getItem("tokenPatriot") == "undefined"

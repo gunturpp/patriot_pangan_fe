@@ -5,7 +5,6 @@ import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { LoadingProvider } from "../../providers/loading";
 import "rxjs/add/operator/map";
-// for google maps variable
 declare var google: any;
 
 @IonicPage()
@@ -29,6 +28,8 @@ export class HomePage {
   dataUser: any;
   user: any;
   dataLineChart: any;
+  currentLong: any;
+  currentLat:any;
 
   constructor(
     public loadingProvider: LoadingProvider,
@@ -41,9 +42,9 @@ export class HomePage {
     this.token = localStorage.getItem("tokenPatriot");
   }
   ionViewDidLoad() {
+
     this.getDataKecamatanByMonth();
-    this.getDataSummary()
-    .then((data)=>{
+    this.getDataSummary().then(data => {
       this.dataSummary = data;
       console.log("data di gomaps", this.dataSummary);
       setTimeout(() => {
@@ -53,28 +54,34 @@ export class HomePage {
 
       //add chart
       this.pieChart = this.getPieChart(this.dataSummary);
-    })
+    });
+    this.getCurrentUser();
+
   }
   ionViewDidEnter() {
-    this.getCurrentUser();
+    this.ionViewDidLoad();
   }
-  getDataSummary(){
-    return new Promise((resolve, reject)=>{
-      let url = this.data.BASE_URL+'summary/getkondisirawanbylokasi';
-      this.data.get(url, this.token)
-      .subscribe(dataResponse =>{
-        let data: any = dataResponse;
-        console.log("dataSummary", data);
-        if(data.status == false) {
-          console.log("Gagal mendapatkan data wilayah");
-        } else {
-          console.log('Berhasil get data summary anjay', data.data);
-          resolve(data.data)
+
+  getDataSummary() {
+    return new Promise((resolve, reject) => {
+      let url = this.data.BASE_URL + "summary/getkondisirawanbylokasi";
+      this.data.get(url, this.token).subscribe(
+        dataResponse => {
+          let data: any = dataResponse;
+          console.log("dataSummary", data);
+          if (data.status == false) {
+            alert(data.message)
+            console.log("Gagal mendapatkan data wilayah");
+          } else {
+            console.log("Berhasil get data summary anjay", data.data);
+            resolve(data.data);
+          }
+        },
+        err => {
+          alert(err);
         }
-      }, err =>{
-        alert(err)
-      })
-    })
+      );
+    });
   }
   failToast() {
     const toast = this.toastCtrl.create({
@@ -96,15 +103,15 @@ export class HomePage {
       .currentUser(this.token)
       .then(user => {
         this.dataUser = user;
-        console.log("data user",this.dataUser);
+        console.log("data user", this.dataUser);
         if (this.dataUser.status == 200 || this.dataUser.status == true) {
           this.loadingProvider.hide();
-          console.log("dayday",this.dataUser.json().status);
-          
-          if(this.dataUser.json().status == false) {
+          console.log("dayday", this.dataUser.json().status);
+
+          if (this.dataUser.json().status == false) {
             localStorage.clear();
             this.navCtrl.parent.parent.setRoot("LoginPage");
-            this.tokenExpiredToast();  
+            this.tokenExpiredToast();
           }
         } else {
           localStorage.clear();
@@ -127,51 +134,63 @@ export class HomePage {
     });
   }
   getPieChart(summary) {
-    console.log('data piechart ', summary);
+    console.log("data piechart ", summary);
 
     let a = summary.kondisi[1],
       b = summary.kondisi[2],
       c = summary.kondisi[3],
       d = summary.kondisi[4],
       e = summary.kondisi[5],
-      f = summary.totalkecamatan - (a+b+c+d+e) //rawan total
-    
-    let color = this.data.COLOR_RAWAN.map(rawan =>{
-      return rawan.color
-    })
-    console.log('data f '+ f + 'data color 2 '+color[2])
+      f = summary.totalkecamatan - (a + b + c + d + e); //rawan total
+
+    let color = this.data.COLOR_RAWAN.map(rawan => {
+      return rawan.color;
+    });
+    console.log("data f " + f + "data color 2 " + color[2]);
     let data = {
       labels: [
-        "Aman    : " + Math.round(f/summary.totalkecamatan*100).toFixed(2) + "%",
-        "Rawan 1 : " + Math.round(a/summary.totalkecamatan*100).toFixed(2) + "%",
-        "Rawan 2 : " + Math.round(b/summary.totalkecamatan*100).toFixed(2) + "%",
-        "Rawan 3 : " + Math.round(c/summary.totalkecamatan*100).toFixed(2) + "%",
-        "Rawan 4 : " + Math.round(d/summary.totalkecamatan*100).toFixed(2) + "%",
-        "Rawan 5 : " + Math.round(e/summary.totalkecamatan*100).toFixed(2) + "%"
+        "Aman    : " +
+          Math.round((f / summary.totalkecamatan) * 100).toFixed(2) +
+          "%",
+        "Rawan 1 : " +
+          Math.round((a / summary.totalkecamatan) * 100).toFixed(2) +
+          "%",
+        "Rawan 2 : " +
+          Math.round((b / summary.totalkecamatan) * 100).toFixed(2) +
+          "%",
+        "Rawan 3 : " +
+          Math.round((c / summary.totalkecamatan) * 100).toFixed(2) +
+          "%",
+        "Rawan 4 : " +
+          Math.round((d / summary.totalkecamatan) * 100).toFixed(2) +
+          "%",
+        "Rawan 5 : " +
+          Math.round((e / summary.totalkecamatan) * 100).toFixed(2) +
+          "%"
       ],
       datasets: [
         {
           data: [f, a, b, c, d, e],
           backgroundColor: [
-            '#'+color[0],
-            '#'+color[1],
-            '#'+color[2],
-            '#'+color[3],
-            '#'+color[4],
-            '#'+color[5]
+            "#" + color[0],
+            "#" + color[1],
+            "#" + color[2],
+            "#" + color[3],
+            "#" + color[4],
+            "#" + color[5]
           ],
           hoverBackgroundColor: [
-            '#'+color[0],
-            '#'+color[1],
-            '#'+color[2],
-            '#'+color[3],
-            '#'+color[4],
-            '#'+color[5]
+            "#" + color[0],
+            "#" + color[1],
+            "#" + color[2],
+            "#" + color[3],
+            "#" + color[4],
+            "#" + color[5]
           ]
         }
       ]
     };
-    
+
     return this.getChart(this.pieCanvas.nativeElement, "pie", data);
   }
 
@@ -318,8 +337,15 @@ export class HomePage {
     return this.getChart(this.lineCanvas.nativeElement, "line", data);
   }
   displayGoogleMap() {
-    console.log('lat ', this.dataSummary.kabupaten.lat)
-    let coordinateDramaga = { lat: this.dataSummary.kabupaten.lat, lng: this.dataSummary.kabupaten.lng };
+    console.log("lat ", this.dataSummary.kabupaten.lat);
+    let coordinateDramaga = {
+      // current location by device
+      // lat: this.currentLat,
+      // lng: this.currentLong
+      // dari data summary
+      lat: this.dataSummary.kabupaten.lat,
+      lng: this.dataSummary.kabupaten.lng
+    };
 
     let mapOptions = {
       center: coordinateDramaga,
@@ -342,31 +368,34 @@ export class HomePage {
     });
   }
   getMarkers() {
-    let url = this.data.BASE_URL+'summary/getkondisirawanbylokasi';
-    this.data.get(url, this.token)
-    .subscribe( dataResponse =>{
-      let data: any = dataResponse;
-      console.log('Berhasil get data summary ', data.data);
-      //data summary
-      this.dataSummary = data.data;
-      //draw marker 
-      this.addMarkersToMap(this.dataSummary.listkecamatan);
-    }, err =>{
-      alert(JSON.stringify(err))
-    })
+    let url = this.data.BASE_URL + "summary/getkondisirawanbylokasi";
+    this.data.get(url, this.token).subscribe(
+      dataResponse => {
+        let data: any = dataResponse;
+        console.log("Berhasil get data summary ", data.data);
+        //data summary
+        this.dataSummary = data.data;
+        //draw marker
+        this.addMarkersToMap(this.dataSummary.listkecamatan);
+      },
+      err => {
+        alert(JSON.stringify(err));
+      }
+    );
   }
 
-  addMarkersToMap(markers) {// markers means list region that will be marked
+  addMarkersToMap(markers) {
+    // markers means list region that will be marked
     for (let marker of markers) {
-
       //find the tipe rawan
-      var tipeRawan = this.data.COLOR_RAWAN.filter( rawan => {
+      var tipeRawan = this.data.COLOR_RAWAN.filter(rawan => {
         return rawan.id == marker.kondisi; // return arr of object by condition
-      })
+      });
 
       var iconNew = {
         url:
-          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+tipeRawan[0].color,// url        labelOrigin: new google.maps.Point(14, 45)
+          "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" +
+          tipeRawan[0].color // url        labelOrigin: new google.maps.Point(14, 45)
       };
       var position = new google.maps.LatLng(marker.lat, marker.lng);
       // plot marker
@@ -377,8 +406,9 @@ export class HomePage {
         animation: google.maps.Animation.DROP
       });
 
-      if (tipeRawan[0].color == "b03060" || tipeRawan[0].color == "ff0000") { // set the marker of rawan4&5 to bounce
-        dogwalkMarker.setAnimation(google.maps.Animation.BOUNCE)
+      if (tipeRawan[0].color == "b03060" || tipeRawan[0].color == "ff0000") {
+        // set the marker of rawan4&5 to bounce
+        dogwalkMarker.setAnimation(google.maps.Animation.BOUNCE);
       }
 
       // infowindows
@@ -408,11 +438,10 @@ export class HomePage {
   /**
    * page function
    */
-  coba(){
-    let url = this.data.BASE_URL+'keluargamiskin/getdetailkeluargamiskin/5';
-    this.data.get(url, this.token)
-    .subscribe(data =>{
-      console.log('berhasil get detail keluarga miskin ', data);
-    })
+  coba() {
+    let url = this.data.BASE_URL + "keluargamiskin/getdetailkeluargamiskin/5";
+    this.data.get(url, this.token).subscribe(data => {
+      console.log("berhasil get detail keluarga miskin ", data);
+    });
   }
 }

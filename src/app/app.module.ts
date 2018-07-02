@@ -25,6 +25,7 @@ import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/goog
 import { DataProvider } from '../providers/data/data';
 import { LoadingProvider } from '../providers/loading';
 import { FileTransfer } from '@ionic-native/file-transfer';
+
 import { SignupPage } from '../pages/signup/signup';
 import { AlertProvider } from '../providers/alert/alert';
 import { ToastProvider } from '../providers/toast/toast';
