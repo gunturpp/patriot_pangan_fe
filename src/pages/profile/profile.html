@@ -116,16 +116,16 @@
       <img class="achievements-empty">
     </div>
 
-    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 3">
+    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 3 && sumReports.laporanterkirim < 5">
       <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
       <img class="achievements-empty">
       <img class="achievements-empty">
     </div>
 
-    <div class="achievements" *ngIf="sumReports.laporanterkirim >= 5">
+    <div class="achievements" *ngIf="sumReports.laporanterkirim > 5 && sumReports.laporanterkirim < 10">
       <img class="achievements-img" src="assets/imgs/profile/achievement1.png">
       <img class="achievements-img" src="assets/imgs/profile/achievement2.png">
-      <img class="achievements-empty" src="assets/imgs/profile/achievement3.png">
+      <img class="achievements-empty">
     </div>
 
     <div class="achievements" *ngIf="sumReports.laporanterkirim >= 10">
@@ -142,7 +142,7 @@
       <ion-col>
         <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
         <span *ngIf="sumReports.laporanterkirim < 5" class="report">Not yet</span>
-        <span *ngIf="sumReports.laporanterkirim >= 3" class="report">3x</span>
+        <span *ngIf="sumReports.laporanterkirim >= 5" class="report">5x</span>
       </ion-col>
       <ion-col>
         <div class="keterangan" style="font-weight: bold">Rutin melapor</div>
