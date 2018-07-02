@@ -201,7 +201,7 @@ export class FormulirPage {
   }
   addReportToast() {
     const toast = this.toastCtrl.create({
-      message: 'Berhasil menambahkan keluarga baru',
+      message: 'Berhasil menambahkan laporan baru',
       duration: 3000,
     });
     toast.present();

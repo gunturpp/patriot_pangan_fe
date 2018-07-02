@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController
+} from "ionic-angular";
 import { Http } from "@angular/http";
 import { DataProvider } from "../../providers/data/data";
 import { LoadingProvider } from "../../providers/loading";
@@ -33,7 +38,7 @@ export class ArticlePage {
   }
   // go to detail page
   readmore(detail) {
-    this.navCtrl.push('ArticleDetailPage', { detail: detail });
+    this.navCtrl.push("ArticleDetailPage", { detail: detail });
   }
   // get article from rest api
   getArticle() {
@@ -55,7 +60,7 @@ export class ArticlePage {
           console.log("penulis", this.penulis);
           this.loadingProvider.hide();
         } else {
-          alert("Terjadi kesalahan. Silahkan coba lagi")
+          alert("Terjadi kesalahan. Silahkan coba lagi");
           this.loadingProvider.hide();
         }
       })
@@ -67,10 +72,9 @@ export class ArticlePage {
   }
   failToast() {
     const toast = this.toastCtrl.create({
-      message: 'Gagal meminta artikel',
-      duration: 3000,
+      message: "Gagal meminta artikel",
+      duration: 3000
     });
     toast.present();
   }
-  
 }

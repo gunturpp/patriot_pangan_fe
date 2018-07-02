@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from "@angular/http";
 import { AuthHttp, JwtHelper } from "angular2-jwt";
 import { Storage } from "@ionic/storage";
 import {
@@ -10,38 +10,44 @@ import {
 import { LoadingProvider } from "../../providers/loading";
 import { ToastController, NavController } from "ionic-angular";
 import { TabsPage } from "../../pages/tabs/tabs";
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/map";
 
 @Injectable()
 export class DataProvider {
-
-  public BASE_URL = 'http://patriotpangan.com/nodejs/';
-  public COLOR_RAWAN = [{
-    id: 0,
-    name: 'Tidak Rawan',
-    color: 'a1a8af'    
-  },{
-    id: 1,
-    name: 'Rawan Pangan 1',
-    color: '00aa00'
-  },{
-    id: 2,
-    name: 'Rawan Pangan 2',    
-    color: 'adff2f'
-  },{
-    id: 3,
-    name: 'Rawan Pangan 3',    
-    color: 'ffff00'  
-  },{
-    id: 4,
-    name: 'Rawan Pangan 4',    
-    color: 'ff0000'  
-  },{
-    id: 5,
-    name: 'Rawan Pangan 5',    
-    color: 'b03060'  
-  }]
+  public BASE_URL = "http://patriotpangan.com/nodejs/";
+  public COLOR_RAWAN = [
+    {
+      id: 0,
+      name: "Tidak Rawan",
+      color: "a1a8af"
+    },
+    {
+      id: 1,
+      name: "Rawan Pangan 1",
+      color: "00aa00"
+    },
+    {
+      id: 2,
+      name: "Rawan Pangan 2",
+      color: "adff2f"
+    },
+    {
+      id: 3,
+      name: "Rawan Pangan 3",
+      color: "ffff00"
+    },
+    {
+      id: 4,
+      name: "Rawan Pangan 4",
+      color: "ff0000"
+    },
+    {
+      id: 5,
+      name: "Rawan Pangan 5",
+      color: "b03060"
+    }
+  ];
 
   constructor(
     // public navCtrl: NavController,
@@ -142,10 +148,16 @@ export class DataProvider {
             console.log("sukses", data);
             const toast = this.toastCtrl.create({
               message: "Selamat datang patriot!",
-              duration: 1000
+              duration: 3000
             });
             toast.present();
             resolve(data.json());
+          } else if (data.status == 200 && data.json().status == false) {
+            const toast = this.toastCtrl.create({
+              message: data.json().message,
+              duration: 3000
+            });
+            toast.present();
           } else {
             const toast = this.toastCtrl.create({
               message: "email atau password salah",
@@ -314,6 +326,7 @@ export class DataProvider {
     return new Promise(resolve => {
       this.authHttp.get(this.apiGetProfile, options).subscribe(data => {
         resolve(data);
+        console.log("profilekuuh", data);
         localStorage.setItem("currentPatriot", JSON.stringify(data));
       }),
         err => {
@@ -331,6 +344,7 @@ export class DataProvider {
     let options = new RequestOptions({ headers: headers });
     return new Promise(resolve => {
       this.authHttp.get(this.apiGetArtikel, options).subscribe(data => {
+        console.log("get artikel", data);
         resolve(data);
       }),
         err => {
@@ -379,6 +393,7 @@ export class DataProvider {
       this.authHttp
         .get(this.apiGetKeluargaMiskinByUser, options)
         .subscribe(data => {
+          console.log("fam by patriot",data);
           resolve(data);
         }),
         err => {
@@ -387,38 +402,34 @@ export class DataProvider {
     });
   }
 
-  // rest 
+  // rest
   public get(url: string, token: string): Observable<{}> {
     const header = new Headers();
 
-    header.append('Content-type', 'application/json');
-    header.append('token', token);
-    return this.http.get(url, {headers: header})
-      .map(
-        (response: Response) => { // extract data
-          if(response.status == 204){
-            console.log('masuk no content ')
-            return [];
-          }
-          else{
-            const body = response.json();
-            return body || {};
-          }
+    header.append("Content-type", "application/json");
+    header.append("token", token);
+    return this.http.get(url, { headers: header }).map((response: Response) => {
+      // extract data
+      if (response.status == 204) {
+        console.log("masuk no content ");
+        return [];
+      } else {
+        const body = response.json();
+        return body || {};
       }
-    );
-
+    });
   }
 
-  public post(url: string, token:string, claims: any): Observable<{}> {
+  public post(url: string, token: string, claims: any): Observable<{}> {
     const header = new Headers();
-    console.log('TOKEN from post ' , token)
-    header.append('Content-type', 'application/json');
-    header.append('token', token);
-    return this.http.post(url, claims, {headers: header})
-      .map( 
-        (response: Response)=>{
-          const body = response.json();
-          return body || {};          
-      })
-  }  
+    console.log("TOKEN from post ", token);
+    header.append("Content-type", "application/json");
+    header.append("token", token);
+    return this.http
+      .post(url, claims, { headers: header })
+      .map((response: Response) => {
+        const body = response.json();
+        return body || {};
+      });
+  }
 }
