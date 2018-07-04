@@ -4,10 +4,8 @@
     "\\src",
     "\\src\\app",
     "\\src\\pages",
-    "\\src\\pages\\artikel2",
-    "\\src\\pages\\home",
-    "\\src\\pages\\tabs"
+    "\\src\\pages\\profile"
   ],
-  "SelectedNode": "\\src\\pages\\tabs\\tabs.html",
+  "SelectedNode": "\\src\\pages\\profile\\profile.html",
   "PreviewInSolutionExplorer": false
 }
