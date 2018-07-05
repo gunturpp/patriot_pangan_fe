@@ -22,7 +22,7 @@
       </span>
       <div class="border"></div>
       <h1 class="title">{{article.judul}}</h1>
-      <p class="content">{{article.isi}}</p>
+      <p class="content" [innerHtml]="article.isi"></p>
       <div class="readmore">
         <button (click)="readmore(article)">Baca Selengkapnya
           <ion-icon name="ios-arrow-forward"></ion-icon>
